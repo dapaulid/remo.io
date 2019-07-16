@@ -1,0 +1,24 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "linterOptions": {
+        "exclude": [
+            "**/*_generated.ts"
+        ]
+    },
+    "jsRules": {},
+    "rules": {
+        "ban-types": false,
+        "object-literal-sort-keys": false,
+        "space-before-function-paren": false,
+        "max-classes-per-file": false,
+        "no-bitwise": false,
+        "no-console": false,
+        "ordered-imports": false,
+        "only-arrow-functions": false,
+        "quotemark": false
+    },
+    "rulesDirectory": []
+}
