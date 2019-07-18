@@ -18,7 +18,10 @@
         "no-console": false,
         "ordered-imports": false,
         "only-arrow-functions": false,
-        "quotemark": false
+        "quotemark": false,
+        "no-namespace": false,
+        "member-ordering": false,
+        "class-name": false
     },
     "rulesDirectory": []
 }
