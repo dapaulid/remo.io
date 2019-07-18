@@ -10,13 +10,16 @@ export interface ISocketServerOptions {
     httpServer: http.Server | https.Server;
 }
 
+// create logger
+const logger = new L0.Logger("L1:SocketServer_WS");
+
 export class SocketServer_WS {
 
     constructor(options: ISocketServerOptions) {
         this.wss = new WebSocket.Server({ server: options.httpServer });
         this.wss.on('connection', (ws: WebSocket, req: http.IncomingMessage) => {
             const socket = ClientSocketWS.fromConnected(ws);
-            console.log("Client connected: " + this.sockAddrToStr(
+            logger.info("Client connected: " + this.sockAddrToStr(
                 req.connection.remoteAddress, req.connection.remotePort));
         });
     }

@@ -1,6 +1,9 @@
 import ISocket from './socket';
 import * as L0 from '../L0_system';
 
+// create logger
+const logger = new L0.Logger("L1:ActiveSocket");
+
 export default abstract class ActiveSocket implements ISocket {
 
     constructor() {
@@ -8,27 +11,27 @@ export default abstract class ActiveSocket implements ISocket {
     }
 
     public connect(): void {
-        console.log("connect");
+        logger.verbose("connect");
         this.doConnect();
     }
 
     public disconnect(): void {
-        console.log("disconnect");
+        logger.verbose("disconnect");
         this.doDisconnect();
     }
 
     protected connected(): void {
-        console.log("connected");
+        logger.info("connected");
         this.send("Hi from remote!");
         this.idleTimer.start();
     }
 
     protected disconnected(): void {
-        console.log("disconnected");
+        logger.info("disconnected");
     }
 
     protected idle() {
-        console.log("connection idle!");
+        logger.info("connection idle!");
     }
 
     public abstract send(message: any): void;

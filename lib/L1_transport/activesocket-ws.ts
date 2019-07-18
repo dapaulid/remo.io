@@ -1,7 +1,12 @@
 import WebSocket from 'isomorphic-ws';
 
+import * as L0 from '../L0_system';
+
 import ActiveSocket from './activesocket';
 import { Socket } from 'net';
+
+// create logger
+const logger = new L0.Logger("L1:ActiveSocket_WS");
 
 export default class ActiveSocket_WS extends ActiveSocket {
 
@@ -27,14 +32,14 @@ export default class ActiveSocket_WS extends ActiveSocket {
             this.connected();
         };
         this.ws.onclose = (event) => {
-            console.log("onclose fired, reason: " + event.code);
+            logger.info("onclose fired, reason: " + event.code);
             this.disconnected();
         };
         this.ws.onmessage = function(msg) {
-            console.log("onmessage fired: " + msg.data);
+            logger.info("onmessage fired: " + msg.data);
         };
         this.ws.onerror = () => {
-            console.log("onerror fired");
+            logger.error("onerror fired");
         };
     }
 
@@ -42,7 +47,7 @@ export default class ActiveSocket_WS extends ActiveSocket {
         if (this.url) {
             this.setRawSocket(new WebSocket(this.url));
         } else {
-            console.log("Cannot connect, URL is null");
+            logger.error("Cannot connect, URL is null");
             this.ws = null;
         }
     }
@@ -58,7 +63,7 @@ export default class ActiveSocket_WS extends ActiveSocket {
         if (this.ws) {
             this.ws.send(message);
         } else {
-            console.log("Cannot send, ws is null");
+            logger.error("Cannot send, ws is null");
         }
     }
 
