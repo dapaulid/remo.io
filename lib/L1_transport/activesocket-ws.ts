@@ -1,4 +1,4 @@
-import WebSocket from 'isomorphic-ws';
+import WebSocket from 'ws';
 
 import * as L0 from '../L0_system';
 

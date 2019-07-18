@@ -14,7 +14,6 @@
   "author": "Daniel Pauli",
   "license": "ISC",
   "dependencies": {
-    "isomorphic-ws": "^4.0.1",
     "ws": "^7.1.0"
   },
   "devDependencies": {
@@ -29,5 +28,8 @@
     "typescript": "^3.5.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
+  },
+  "browser": {
+    "ws": "./browser/ws.js"
   }
 }
