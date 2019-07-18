@@ -3,6 +3,7 @@ var http = require('http');
 var path = require('path');
 
 const RemoServer = require('../../dev/lib/server').default;
+const client = require('../../dev/lib/client');
 
 /*
     create web server
@@ -17,9 +18,13 @@ const httpServer = http.createServer(app);
     create rmi server
 */
 const rmiServer = new RemoServer({ httpServer });
+
 /*
     serve clients
 */
 httpServer.listen(3000, () => {
     console.log("\nexample running at http://localhost:" + httpServer.address().port);
+
+    client.connect("ws://localhost:3000");
+
 });
