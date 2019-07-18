@@ -39,7 +39,7 @@ export default class Logger {
         const ll = LOG_LEVELS[level] || {};
         const prefix = ll.prefix || level.toString();
         const log = ll.log ? (console as any)[ll.log] : console.log;
-        const message = LOGGER_PREFIX + "[" + prefix + "] [" + this.category + "] " + text;
+        const message = LOGGER_PREFIX + "[ " + prefix + " ] [" + this.category + "] " + text;
         // output message
         log(message);
     }
