@@ -8,8 +8,8 @@ export enum LogLevel {
     ERROR   = 1,
     WARN    = 2,
     INFO    = 3,
-    VERBOSE = 4,
-    DEBUG   = 5,
+    DEBUG   = 4,
+    VERBOSE = 5,
 }
 
 const LOG_LEVELS = [
@@ -17,8 +17,8 @@ const LOG_LEVELS = [
     /* ERROR  : */ { prefix: 'ERROR', /*color: colors.red,*/ log: 'error' },
     /* WARN   : */ { prefix: 'WARN ', /*color: colors.yellow,*/ log: 'warn' },
     /* INFO   : */ { prefix: 'INFO ', /*color: colors.white,*/ log: 'info' },
-    /* VERBOSE: */ { prefix: 'VERB ', /*color: colors.gray,*/ log: 'log' },
     /* DEBUG  : */ { prefix: 'DEBUG', /*color: colors.magenta,*/ log: 'log' },
+    /* VERBOSE: */ { prefix: 'VERB ', /*color: colors.gray,*/ log: 'log' },
 ];
 
 export default class Logger {
@@ -60,12 +60,12 @@ export default class Logger {
         this.log(LogLevel.INFO, text);
     }
 
-    public verbose(text: string) {
-        this.log(LogLevel.VERBOSE, text);
-    }
-
     public debug(text: string) {
         this.log(LogLevel.DEBUG, text);
+    }
+
+    public verbose(text: string) {
+        this.log(LogLevel.VERBOSE, text);
     }
 
     private category: string;

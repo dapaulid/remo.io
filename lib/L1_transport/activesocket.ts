@@ -25,23 +25,29 @@ interface IPendingFrame {
 }
 
 interface IActiveSocketConfig {
+    connectTimeout: number;
     commTimeout: number;
+    idleTimeout: number;
 }
 
 export default abstract class ActiveSocket implements ISocket {
 
     constructor() {
+
+        // config
+        this.config = {
+            connectTimeout: 1000,
+            commTimeout: 1000,
+            idleTimeout: 1000,
+        };
+
         this.onmessage = null;
         this.onstatechanged = null;
         this.state = LinkState.DISCONNECTED;
         this.nextFrameId = 0;
         this.pendingFrames = new Map();
-        this.idleTimer = new L0.Timer(1000, this.idle.bind(this));
-
-        // config
-        this.config = {
-            commTimeout: 1000,
-        };
+        this.connectTimer = new L0.Timer(this.config.connectTimeout, this.linkdown.bind(this));
+        this.idleTimer = new L0.Timer(this.config.idleTimeout, this.idle.bind(this));
 
         // init statistics
         this.rxCount = 0;
@@ -52,17 +58,23 @@ export default abstract class ActiveSocket implements ISocket {
         // change state
         this.setState(LinkState.CONNECTING);
         this.doConnect();
+        // update timers
+        this.connectTimer.start();
     }
 
     public disconnect(): void {
         // change state
         this.setState(LinkState.DISCONNECTING);
         this.doDisconnect();
+        // update timers
+        this.connectTimer.stop();
     }
 
     public getState(): LinkState {
         return this.state;
     }
+
+    public abstract canConnect(): boolean;
 
     public send(message: any): Promise<void> {
         return this.sendFrame(undefined, message).catch((err: errors.RemoError) => {
@@ -254,6 +266,8 @@ export default abstract class ActiveSocket implements ISocket {
         // change state
         this.setState(LinkState.CONNECTED);
         this.idleTimer.start();
+        // reset timers
+        this.connectTimer.stop();
     }
 
     protected disconnected(): void {
@@ -261,6 +275,7 @@ export default abstract class ActiveSocket implements ISocket {
         this.setState(LinkState.DISCONNECTED);
         // reset timers
         this.idleTimer.stop();
+        this.connectTimer.stop();
         // reset raw socket
         this.doReset();
     }
@@ -270,6 +285,13 @@ export default abstract class ActiveSocket implements ISocket {
         this.setState(LinkState.LINKDOWN);
         // reset timers
         this.idleTimer.stop();
+        this.connectTimer.stop();
+        // reset raw socket
+        this.doReset();
+        // try to reconnect
+        if (this.canConnect()) {
+            this.connect();
+        }
     }
 
     protected idle() {
@@ -292,7 +314,7 @@ export default abstract class ActiveSocket implements ISocket {
         const oldState = this.state;
         this.state = state;
         // trace info
-        logger.verbose(oldState + " => " + this.state);
+        logger.debug(oldState + " => " + this.state);
         // notify upper layer
         if (this.onstatechanged) {
             this.onstatechanged(this.state);
@@ -315,6 +337,7 @@ export default abstract class ActiveSocket implements ISocket {
 
     protected state: LinkState;
     protected nextFrameId: number;
+    protected connectTimer: L0.Timer;
     protected idleTimer: L0.Timer;
     protected pendingFrames: Map<number, IPendingFrame>;
 

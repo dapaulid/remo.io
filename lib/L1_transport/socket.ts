@@ -9,6 +9,7 @@ export default interface ISocket {
 
     // queries
     getState(): LinkState;
+    canConnect(): boolean;
 
     // callbacks
     onmessage: ((message: any) => void) | null;
