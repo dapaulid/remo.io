@@ -9,7 +9,7 @@ interface IErrorDesc {
 // error class used for all library specific errors
 class RemoError extends Error implements IErrorDesc {
 
-    constructor(err: IErrorDesc) {
+    constructor(err: IErrorDesc, details?: any) {
         // format error message
         const message = '[' + err.label + '] ' + err.text + ' (code ' + formatErrorCode(err.code) + ')';
         // call base
@@ -19,11 +19,13 @@ class RemoError extends Error implements IErrorDesc {
         this.label = err.label;
         this.code = err.code;
         this.text = err.text;
+        this.details = details;
     }
 
     public label: string;
     public code: number;
     public text: string;
+    public details: any;
 }
 
 function formatErrorCode(code: number) {

@@ -21,7 +21,8 @@
         "quotemark": false,
         "no-namespace": false,
         "member-ordering": false,
-        "class-name": false
+        "class-name": false,
+        "max-line-length": false
     },
     "rulesDirectory": []
 }

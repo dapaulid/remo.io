@@ -35,8 +35,8 @@ export default class ActiveSocket_WS extends ActiveSocket {
             logger.info("onclose fired, reason: " + event.code);
             this.disconnected();
         };
-        this.ws.onmessage = function(msg) {
-            logger.info("onmessage fired: " + msg.data);
+        this.ws.onmessage = (event) => {
+            this.receive(event.data);
         };
         this.ws.onerror = () => {
             logger.error("onerror fired");
@@ -59,11 +59,32 @@ export default class ActiveSocket_WS extends ActiveSocket {
         }
     }
 
-    public send(message: any): void {
+    protected doSend(data: string): void {
         if (this.ws) {
-            this.ws.send(message);
+            this.ws.send(data);
         } else {
             logger.error("Cannot send, ws is null");
+        }
+    }
+
+    protected doReset(): void {
+        if (this.ws) {
+            // remove all callbacks
+            // use dummys to see if there's a zombie knocking...
+            this.ws.onopen = function() {
+                logger.warn("onopen fired on stale socket");
+            };
+            this.ws.onclose = function() {
+                logger.warn("onclose fired on stale socket");
+            };
+            this.ws.onmessage = function() {
+                logger.warn("onmessage fired on stale socket");
+            };
+            this.ws.onerror = function() {
+                logger.warn("onerror fired on stale socket");
+            };
+            // finally leave it to the garbage collector
+            this.ws = null;
         }
     }
 
