@@ -4,6 +4,7 @@
     CONNECTED     = "CONNECTED",
     DISCONNECTING = "DISCONNECTING",
     LINKDOWN      = "LINKDOWN",
+    RECONNECTING  = "RECONNECTING",
 }
 
  export default LinkState;

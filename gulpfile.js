@@ -49,8 +49,8 @@ gulp.task('build:browser', () => {
     return browserify({
         entries: 'dev/lib/client.js',
         standalone: 'remo',
-        debug: true
     })
+        .exclude('uws') // optional module of socket.io
         .bundle()
         .pipe(source('remo.js'))
         .pipe(buffer())
