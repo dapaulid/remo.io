@@ -21,6 +21,10 @@ export default class ServerSocket_SIO extends Socket {
         this.socket.on('disconnect', () => {
             this.disconnected();
         });
+
+        if (this.socket.connected) {
+            this.connected();
+        }
     }
 
     protected doConnect(): void {
