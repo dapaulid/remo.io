@@ -1,35 +1,51 @@
-import io from 'socket.io';
-
+import Socket from './socket';
 import * as L0 from '../L0_system';
+import * as errors from '../errors';
+import RawData from './rawdata';
 
-import * as http from 'http';
-import * as https from 'https';
-
-export interface ISocketServerOptions {
-    httpServer: http.Server | https.Server;
-}
+import io from 'socket.io';
 
 // create logger
 const logger = new L0.Logger("L1:ServerSocket_SIO");
 
-export class ServerSocket_SIO {
+export default class ServerSocket_SIO extends Socket {
 
-    constructor(options: ISocketServerOptions) {
-        this.ss = io(options.httpServer, {
-            pingTimeout: 1000,
-            pingInterval: 1500,
+    constructor(socket: SocketIO.Socket) {
+
+        super();
+        this.socket = socket;
+
+        this.socket.on('message', (data: RawData) => {
+            this.receive(data);
         });
-        this.count = 0;
-        this.ss.on('connection', (client: SocketIO.Socket) => {
-            this.count++;
-            const connectTime = new L0.Stopwatch();
-            logger.info('connect: ' + client.id + ' (' + this.count + ')');
-            client.on('message', (data) => { logger.info('message' + data); });
-            client.on('disconnect', () => { this.count--; console.log('disconnect ' + client.id  + ' after ' + connectTime.elapsedMs() + ' ms (' + this.count + ')'); });
+        this.socket.on('disconnect', () => {
+            this.disconnected();
         });
     }
 
-    private count: number;
+    protected doConnect(): void {
+        logger.error("server side socket does not support connecting to client");
+    }
 
-    private ss: SocketIO.Server;
+    protected doDisconnect(): void {
+        if (this.socket) {
+            this.socket.disconnect();
+        }
+    }
+
+    protected doSend(data: RawData): void {
+        if (this.socket) {
+            this.socket.send(data);
+        }
+    }
+
+    protected doReset(): void {
+        if (this.socket) {
+            this.socket.removeAllListeners();
+            this.socket = null;
+        }
+    }
+
+    protected socket: SocketIO.Socket | null;
+
 }

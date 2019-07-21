@@ -1,0 +1,28 @@
+import io from 'socket.io';
+
+import SocketServer from './socketserver';
+import ServerSocket_SIO from './serversocket-sio';
+import * as L0 from '../L0_system';
+import ISocketServerOptions from './isocketserveroptions';
+
+// create logger
+const logger = new L0.Logger("L1:SocketServer_SIO");
+
+export default class SocketServer_SIO extends SocketServer {
+
+    constructor(options: ISocketServerOptions) {
+
+        super();
+
+        this.ss = io(options.httpServer, {
+            pingTimeout: 1000,
+            pingInterval: 1500,
+        });
+
+        this.ss.on('connection', (rawSocket: SocketIO.Socket) => {
+            this.connected(new ServerSocket_SIO(rawSocket));
+        });
+    }
+
+    private ss: SocketIO.Server;
+}
