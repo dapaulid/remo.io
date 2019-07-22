@@ -29,10 +29,14 @@ export default class CLientSocket_SIO extends Socket {
             this.connected();
         });
         // register message specific handlers
-        this.receivers.forEach((handler: (message: any) => any, type: string) => {
+        this.receivers.forEach((handler: (message: any) => Promise<any>, type: string) => {
             if (this.socket) {
                 this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
-                    callback(handler(message));
+                    handler(message).then((result) => {
+                        callback({ result });
+                    }).catch((error) => {
+                        callback({ error });
+                    });
                 });
             }
         });
@@ -83,5 +87,5 @@ export default class CLientSocket_SIO extends Socket {
     protected socket: SocketIOClient.Socket | null;
     protected url: string;
 
-    protected receivers: Map<string, (message: any) => any>;
+    protected receivers: Map<string, (message: any) => Promise<any>>;
 }

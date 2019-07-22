@@ -1,15 +1,14 @@
-// import ActiveSocket_WS from './L1_transport/activesocket-ws';
-import * as L1 from './L1_transport';
+import * as L2 from './L2_application';
 
 console.log("Powered by remo.js");
 
-export function connect(url?: string | null): L1.ISocket {
-    const socket: L1.ISocket = new L1.ClientSocket_SIO(url || "http://localhost:3000"); // ActiveSocket_WS =  new ActiveSocket_WS(url);
-    socket.connect();
-    // setTimeout(() => {
-    socket.send("test", "Hi from client!").then((reply) => {
-        console.log("Got reply from server: " + reply);
+export function connect(url?: string | null): L2.RemoteEndpoint {
+    const client = new L2.ClientEndpoint(url);
+    const remote = client.getRemote();
+    remote.callFunction("Hansli", { gugus: 1234 }, 777).then((result) => {
+        console.log("Function on server completed: " + JSON.stringify(result));
+    }).catch((err) => {
+        console.log("Function on server failed: " + err);
     });
-    // }, 1000);
-    return socket;
+    return remote;
 }

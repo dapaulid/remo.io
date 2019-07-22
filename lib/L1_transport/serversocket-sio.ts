@@ -24,10 +24,14 @@ export default class ServerSocket_SIO extends Socket {
         }
     }
 
-    public receive(type: string, handler: (message: any) => any): void {
+    public receive(type: string, handler: (message: any) => Promise<any>): void {
         if (this.socket) {
             this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
-                callback(handler(message));
+                handler(message).then((result) => {
+                    callback({ result });
+                }).catch((error) => {
+                    callback({ error });
+                });
             });
         }
     }
