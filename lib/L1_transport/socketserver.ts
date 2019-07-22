@@ -14,6 +14,10 @@ export default abstract class SocketServer implements ISocketServer {
     }
 
     protected connected(socket: ISocket) {
+        socket.receive('test', (message: any) => {
+            console.log("Received message: " + message);
+            return "cool!";
+        });
         if (this.onconnected) {
             this.onconnected(socket);
         }

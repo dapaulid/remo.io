@@ -6,12 +6,12 @@ export default interface ISocket {
     // commands
     connect(): void;
     disconnect(): void;
-    send(message: any): void;
+    send(type: string, message: any): Promise<any>;
+    receive(type: string, handler: (message: any) => any): void;
 
     // queries
     getState(): LinkState;
 
     // callbacks
-    onmessage: ((message: any) => void) | null;
     onstatechanged: ((state: LinkState, reason: RemoError) => void) | null;
 }

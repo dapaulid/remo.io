@@ -15,15 +15,20 @@ export default class ServerSocket_SIO extends Socket {
         super();
         this.socket = socket;
 
-        this.socket.on('message', (data: RawData) => {
-            this.receive(data);
-        });
         this.socket.on('disconnect', () => {
             this.disconnected();
         });
 
         if (this.socket.connected) {
             this.connected();
+        }
+    }
+
+    public receive(type: string, handler: (message: any) => any): void {
+        if (this.socket) {
+            this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
+                callback(handler(message));
+            });
         }
     }
 
@@ -37,10 +42,14 @@ export default class ServerSocket_SIO extends Socket {
         }
     }
 
-    protected doSend(data: RawData): void {
-        if (this.socket) {
-            this.socket.send(data);
-        }
+    protected doSend(type: string, message: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.socket) {
+                this.socket.emit('msg_' + type, message, (reply: any) => {
+                    resolve(reply);
+                });
+            }
+        });
     }
 
     protected doReset(): void {

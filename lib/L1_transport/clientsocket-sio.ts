@@ -15,6 +15,12 @@ export default class CLientSocket_SIO extends Socket {
         super();
         this.socket = null;
         this.url = url;
+
+        this.receivers = new Map();
+    }
+
+    public receive(type: string, handler: (message: any) => any): void {
+        this.receivers.set(type, handler);
     }
 
     protected doConnect(): void {
@@ -22,8 +28,13 @@ export default class CLientSocket_SIO extends Socket {
         this.socket.on('connect', () => { // engine.io: open
             this.connected();
         });
-        this.socket.on('message', (data: RawData) => {
-            this.receive(data);
+        // register message specific handlers
+        this.receivers.forEach((handler: (message: any) => any, type: string) => {
+            if (this.socket) {
+                this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
+                    callback(handler(message));
+                });
+            }
         });
         this.socket.on('disconnect', (reason: string) => { // engine.io: close
             if (reason === 'io server disconnect') {
@@ -52,10 +63,14 @@ export default class CLientSocket_SIO extends Socket {
         }
     }
 
-    protected doSend(data: RawData): void {
-        if (this.socket) {
-            this.socket.send(data);
-        }
+    protected doSend(type: string, message: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.socket) {
+                this.socket.emit('msg_' + type, message, (reply: any) => {
+                    resolve(reply);
+                });
+            }
+        });
     }
 
     protected doReset(): void {
@@ -68,4 +83,5 @@ export default class CLientSocket_SIO extends Socket {
     protected socket: SocketIOClient.Socket | null;
     protected url: string;
 
+    protected receivers: Map<string, (message: any) => any>;
 }
