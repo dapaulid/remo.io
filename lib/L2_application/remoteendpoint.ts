@@ -8,6 +8,11 @@ import * as errors from '../errors';
 // create logger
 const logger = new L0.Logger("L2:RemoteEndpoint");
 
+// messages used for communication
+enum Message {
+    CALL = "call",
+}
+
 export default class RemoteEndpoint implements IEndpoint {
 
     constructor(local: LocalEndpoint, socket: L1.ISocket) {
@@ -15,13 +20,13 @@ export default class RemoteEndpoint implements IEndpoint {
         this.local = local;
         this.socket = socket;
 
-        this.socket.receive('call', (msg) => {
+        this.socket.receive(Message.CALL, (msg) => {
             return this.local.callFunction(msg.id, msg.args);
         });
     }
 
     public callFunction(id: string, ...args: any): Promise<any> {
-        return this.socket.send('call', { id, args }).then((reply: any) => {
+        return this.socket.send(Message.CALL, { id, args }).then((reply: any) => {
             if (reply.error) {
                 // failed
                 const err = reply.error;
