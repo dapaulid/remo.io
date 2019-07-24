@@ -20,8 +20,27 @@ export default abstract class Endpoint implements IEndpoint {
         logger.info("registering function: " + id);
         this.functions.set(id, func);
 
-        if (func.name) {
-            this.api[func.name] = func;
+        // select api object according to id path
+        let api: any = this.api;
+        let parent = null;
+        let name = null;
+        // select parent
+        for (const part of id.split('.')) {
+            parent = name;
+            if (parent) {
+                // create new object if not existing
+                if (api[parent] == null) {
+                    api[parent] = {};
+                }
+                // move down
+                api = api[parent];
+            }
+            name = part;
+        }
+
+        // add to api object
+        if (name) {
+            api[name] = func;
         }
     }
 

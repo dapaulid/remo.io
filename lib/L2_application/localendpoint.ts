@@ -25,6 +25,33 @@ export default class LocalEndpoint extends Endpoint {
         });
     }
 
+    public registerFunctions(baseid: string, obj: any) {
+        // iterate over properties
+        for (const name of Object.keys(obj)) {
+            const prop = obj[name];
+
+            // skip nulls
+            if (!prop) {
+                continue;
+            }
+            // build full id
+            const id = baseid ? baseid + '.' + name : name;
+
+            // check property type
+            const type = typeof prop;
+            if (type === 'function') {
+                // register function
+                this.registerFunction(id, prop);
+            } else if (type === 'object') {
+                // recurse
+                this.registerFunctions(id, prop);
+            } else {
+                // ignore
+                logger.debug("Skipping property " + id + " of type '" + type + '"');
+            }
+        }
+    }
+
     public unregisterFunction(id: string): boolean {
         if (!super.unregisterFunction(id)) {
             return false;

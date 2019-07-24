@@ -13,7 +13,7 @@ export default class RemoServer {
             return 666;
         });
         this.server.registerFunction("log", console.log);
-        this.server.registerFunction("readFileSync", fs.readFileSync);
+        this.server.registerFunctions("fs", fs);
     }
 
     private server: L2.ServerEndpoint;
