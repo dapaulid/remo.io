@@ -46,6 +46,7 @@ export default class RemoteEndpoint extends Endpoint {
         return this.socket.send(Message.CALL, { id, args }).then((reply: any) => {
             if (reply.error) {
                 // failed
+                console.error("FUNC FAILED", reply.error);
                 return Promise.reject(errors.revive(reply.error));
             }
             // success

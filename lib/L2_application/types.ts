@@ -1,6 +1,5 @@
 export interface IFuncDesc {
     id: string;
-    name: string;
     params: IParamDesc[];
 }
 

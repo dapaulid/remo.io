@@ -60,5 +60,10 @@ export default class LocalEndpoint extends Endpoint {
         return remote;
     }
 
+    protected createFunctionId(func: Function): string {
+        // NOTE: do NOT use func.name due to unexpected results (e.g. console.log -> "bound consoleCall") and minification
+        return "TODO"; // func.name;
+    }
+
     protected remotes: Set<RemoteEndpoint>;
 }

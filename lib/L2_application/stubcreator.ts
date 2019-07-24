@@ -5,7 +5,6 @@ export default class StubCreator {
     public static createDescriptor(id: string, func: Function): types.IFuncDesc {
         return {
             id,
-            name: func.name,
             params: this.getParamNames(func).map((name: string) => ({ name })),
         };
     }
@@ -14,13 +13,14 @@ export default class StubCreator {
         // create function for wrapping handler function
         const stub: types.StubFunction = (...args) => handler(desc.id, ...args);
         // set function name
+        const name = desc.id.substr(desc.id.lastIndexOf(".") + 1);
         Object.defineProperty(stub, 'name', {
-            value: desc.name,
+            value: name,
         });
         // set function description
         const paramList = desc.params.map((param: types.IParamDesc) => param.name).join(', ');
         Object.defineProperty(stub, 'toString', {
-            value: () => `function ${desc.name}(${paramList}) { [remote code] }`,
+            value: () => `function ${name}(${paramList}) { [remote code] }`,
         });
         return stub;
     }

@@ -1,6 +1,7 @@
 import * as L2 from './L2_application/errors';
 import * as L1 from './L1_transport/errors';
 import RemoError from './remoerror';
+import RemoteError from './remoteerror';
 
 export { RemoError, L1, L2 };
 
@@ -10,7 +11,18 @@ export function revive(err: any): Error {
         return new RemoError({ label: err.label, code: err.code, text: err.text }, err.details);
     } else {
         // unknown error
-        // TODO use class RemoteError for this?
-        return new RemoError(L2.UNKNOWN_RPC_ERROR, err);
+        return new RemoteError(err.message, err);
+    }
+}
+
+export function serialize(err: any) {
+    if (err instanceof Error) {
+        const ser = Object.assign({}, err);
+        // assign non-enumerable (?) properties
+        ser.message = err.message;
+        return ser;
+    } else {
+        // as is
+        return err;
     }
 }

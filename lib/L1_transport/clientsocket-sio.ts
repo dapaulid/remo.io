@@ -46,7 +46,7 @@ export default class CLientSocket_SIO extends Socket {
                     handler(message).then((result) => {
                         callback({ result });
                     }).catch((error) => {
-                        callback({ error });
+                        callback({ error: errors.serialize(error) });
                     });
                 });
             }

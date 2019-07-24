@@ -30,7 +30,7 @@ export default class ServerSocket_SIO extends Socket {
                 handler(message).then((result) => {
                     callback({ result });
                 }).catch((error) => {
-                    callback({ error });
+                    callback({ error: errors.serialize(error) });
                 });
             });
         }
