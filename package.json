@@ -11,8 +11,8 @@
     "rpc",
     "rmi"
   ],
-  "author": "Daniel Pauli",
-  "license": "ISC",
+  "author": "Daniel Pauli <dapaulid@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "socket.io": "^2.2.0"
   },
