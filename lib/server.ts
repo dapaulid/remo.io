@@ -12,6 +12,7 @@ export default class RemoServer {
             console.log("HANSLI CALLED ON SERVER WITH foo=" + JSON.stringify(foo) + ", bar=" + bar);
             return 666;
         });
+        this.server.registerFunction("echo", (param: any) => param);
         this.server.registerFunction("log", console.log);
         this.server.registerFunctions("fs", fs);
     }
