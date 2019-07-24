@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 // export * from './socketserver-ws';
 export * from './socketserver-sio';
 import ISocket from './isocket';
@@ -10,3 +20,7 @@ export {
     ISocket, ISocketServer, ISocketServerOptions,
     ClientSocket_SIO, ServerSocket_SIO, SocketServer_SIO,
 };
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

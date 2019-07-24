@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 import * as L2 from './L2_application/errors';
 import * as L1 from './L1_transport/errors';
 import RemoError from './remoerror';
@@ -26,3 +36,7 @@ export function serialize(err: any) {
         return err;
     }
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

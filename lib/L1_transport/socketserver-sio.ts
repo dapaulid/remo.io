@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 import io from 'socket.io';
 
 import SocketServer from './socketserver';
@@ -26,3 +36,7 @@ export default class SocketServer_SIO extends SocketServer {
 
     private ss: SocketIO.Server;
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

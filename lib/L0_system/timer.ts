@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 export default class Timer {
 
     constructor(interval: number, callback: VoidFunction) {
@@ -28,3 +38,7 @@ export default class Timer {
     private callback: VoidFunction;
     private handle: NodeJS.Timeout | null;
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

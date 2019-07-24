@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 import * as L2 from './L2_application';
 
 console.log("Powered by remo.js");
@@ -14,3 +24,7 @@ export function connect(url?: string | null): L2.RemoteEndpoint {
     });
     return remote;
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

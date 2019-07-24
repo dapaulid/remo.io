@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 import Endpoint from './endpoint';
 import LocalEndpoint from './localendpoint';
 
@@ -78,3 +88,7 @@ export default class RemoteEndpoint extends Endpoint {
     protected local: LocalEndpoint;
     protected socket: L1.ISocket;
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

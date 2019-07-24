@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 import ISocket from './socket';
 import * as L0 from '../L0_system';
 import * as errors from '../errors';
@@ -89,3 +99,7 @@ export default abstract class Socket implements ISocket {
     protected rxCount: number;
     protected dropCount: number;
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------

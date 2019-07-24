@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 import Endpoint from './endpoint';
 import RemoteEndpoint from './remoteendpoint';
 import StubCreator from './stubcreator';
@@ -94,3 +104,7 @@ export default class LocalEndpoint extends Endpoint {
 
     protected remotes: Set<RemoteEndpoint>;
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------
