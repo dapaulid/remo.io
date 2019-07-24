@@ -9,17 +9,15 @@ const logger = new L0.Logger("L2:ClientEndpoint");
 
 export default class ClientEndpoint extends LocalEndpoint {
 
-    constructor(url?: string | null) {
+    constructor() {
         super();
+    }
+
+    public connect(url?: string | null): RemoteEndpoint {
         const socket = new L1.ClientSocket_SIO(url || "http://localhost:3000");
         socket.connect();
 
-        this.remote = this.createRemoteEndpoint(socket);
+        return this.createRemoteEndpoint(socket);
     }
 
-    public getRemote(): RemoteEndpoint {
-        return this.remote;
-    }
-
-    protected remote: RemoteEndpoint;
 }

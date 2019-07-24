@@ -11,6 +11,7 @@ export default abstract class Endpoint implements IEndpoint {
 
     constructor() {
         this.functions = new Map();
+        this.api = {};
     }
 
     public abstract callFunction(id: string, ...args: any): Promise<any>;
@@ -18,6 +19,10 @@ export default abstract class Endpoint implements IEndpoint {
     public registerFunction(id: string, func: Function) {
         logger.info("registering function: " + id);
         this.functions.set(id, func);
+
+        if (func.name) {
+            this.api[func.name] = func;
+        }
     }
 
     public unregisterFunction(id: string): boolean {
@@ -26,4 +31,5 @@ export default abstract class Endpoint implements IEndpoint {
     }
 
     protected functions: Map<string, Function>;
+    protected api: any;
 }

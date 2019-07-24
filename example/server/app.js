@@ -24,7 +24,4 @@ const rmiServer = new RemoServer({ httpServer });
 */
 httpServer.listen(3000, () => {
     console.log("\nexample running at http://localhost:" + httpServer.address().port);
-
-    client.connect("ws://localhost:3000");
-
 });
