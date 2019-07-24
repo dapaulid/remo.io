@@ -1,23 +1,39 @@
-import IEndpoint from './iendpoint';
+import Endpoint from './endpoint';
+import RemoteEndpoint from './remoteendpoint';
+import StubCreator from './stubcreator';
 
+import * as L1 from '../L1_transport';
 import * as L0 from '../L0_system';
 import * as errors from '../errors';
 
 // create logger
 const logger = new L0.Logger("L2:LocalEndpoint");
 
-export default class LocalEndpoint implements IEndpoint {
+export default class LocalEndpoint extends Endpoint {
 
     constructor() {
-        this.functions = new Map();
+        super();
+        this.remotes = new Set();
     }
 
     public registerFunction(id: string, func: Function) {
-        this.functions.set(id, func);
+        super.registerFunction(id, func);
+        // update remotes
+        const desc = StubCreator.createDescriptor(id, func);
+        this.remotes.forEach((remote) => {
+            remote.funcRegistered(desc);
+        });
     }
 
     public unregisterFunction(id: string): boolean {
-        return this.functions.delete(id);
+        if (!super.unregisterFunction(id)) {
+            return false;
+        }
+        this.remotes.forEach((remote) => {
+            remote.funcUnregistered(id);
+        });
+        // success
+        return true;
     }
 
     public callFunction(id: string, ...args: any): Promise<any> {
@@ -32,5 +48,17 @@ export default class LocalEndpoint implements IEndpoint {
         });
     }
 
-    protected functions: Map<string, Function>;
+    protected createRemoteEndpoint(socket: L1.ISocket): RemoteEndpoint {
+        const remote = new RemoteEndpoint(this, socket);
+        this.remotes.add(remote);
+        logger.info("RemoteEndpoint created");
+        // send function descriptors
+        this.functions.forEach((func: Function, id: string) => {
+            const desc = StubCreator.createDescriptor(id, func);
+            remote.funcRegistered(desc);
+        });
+        return remote;
+    }
+
+    protected remotes: Set<RemoteEndpoint>;
 }

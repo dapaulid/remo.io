@@ -21,6 +21,16 @@ export default class CLientSocket_SIO extends Socket {
 
     public receive(type: string, handler: (message: any) => any): void {
         this.receivers.set(type, handler);
+        // TODO de-duplicate code #1
+        if (this.socket) {
+            this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
+                handler(message).then((result: any) => {
+                    callback({ result });
+                }).catch((error: any) => {
+                    callback({ error });
+                });
+            });
+        }
     }
 
     protected doConnect(): void {
@@ -30,6 +40,7 @@ export default class CLientSocket_SIO extends Socket {
         });
         // register message specific handlers
         this.receivers.forEach((handler: (message: any) => Promise<any>, type: string) => {
+            // TODO de-duplicate code #1
             if (this.socket) {
                 this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
                     handler(message).then((result) => {

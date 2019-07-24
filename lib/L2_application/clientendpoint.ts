@@ -14,7 +14,7 @@ export default class ClientEndpoint extends LocalEndpoint {
         const socket = new L1.ClientSocket_SIO(url || "http://localhost:3000");
         socket.connect();
 
-        this.remote = new RemoteEndpoint(this, socket);
+        this.remote = this.createRemoteEndpoint(socket);
     }
 
     public getRemote(): RemoteEndpoint {

@@ -14,15 +14,12 @@ export default class ServerEndpoint extends LocalEndpoint {
         this.server = new L1.SocketServer_SIO(options);
         this.server.onconnected = this.connected.bind(this);
         // TODO disconnect?
-        this.remotes = new Set();
     }
 
     protected connected(socket: L1.ISocket): void {
-        this.remotes.add(new RemoteEndpoint(this, socket));
-        logger.info("RemoteEndpoint connected");
+        this.createRemoteEndpoint(socket);
     }
 
     protected server: L1.ISocketServer;
-    protected remotes: Set<RemoteEndpoint>;
 
 }

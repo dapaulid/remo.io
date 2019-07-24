@@ -4,3 +4,4 @@ export const DECODE_FAILED         = { label: 'L1_DECODE_FAILED',         code: 
 export const CODEC_NO_BINARY       = { label: 'L1_CODEC_NO_BINARY',       code: 0xE1000003, text: 'Codec does not support binary data' };
 export const FRAME_ID_COLLISION    = { label: 'L1_FRAME_ID_COLLISION',    code: 0xE1000004, text: 'A frame with the same ID is already pending' };
 export const COMM_TIMEOUT          = { label: 'L1_COMM_TIMEOUT'      ,    code: 0xE1000005, text: 'Communication timeout' };
+export const RAW_SOCKET_NULL       = { label: 'L1_RAW_SOCKET_NULL',       code: 0xE1000006, text: 'Raw socket does not exist' };

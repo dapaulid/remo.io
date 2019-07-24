@@ -2,6 +2,8 @@ import * as L2 from './L2_application';
 
 console.log("Powered by remo.js");
 
+export let server = connect();
+
 export function connect(url?: string | null): L2.RemoteEndpoint {
     const client = new L2.ClientEndpoint(url);
     const remote = client.getRemote();

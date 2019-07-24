@@ -52,6 +52,8 @@ export default class ServerSocket_SIO extends Socket {
                 this.socket.emit('msg_' + type, message, (reply: any) => {
                     resolve(reply);
                 });
+            } else {
+                reject(new errors.RemoError(errors.L1.RAW_SOCKET_NULL));
             }
         });
     }
