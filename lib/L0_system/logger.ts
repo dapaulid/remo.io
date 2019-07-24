@@ -29,7 +29,7 @@ export default class Logger {
         this.category = category;
     }
 
-    protected log(level: LogLevel, text: string) {
+    protected log(level: LogLevel, message: any, ...optionalParams: any[]) {
         // check log level
         if (level > Logger.loglevel) {
             // filtered
@@ -39,33 +39,33 @@ export default class Logger {
         const ll = LOG_LEVELS[level] || {};
         const prefix = ll.prefix || level.toString();
         const log = ll.log ? (console as any)[ll.log] : console.log;
-        const message = LOGGER_PREFIX + "[ " + prefix + " ] [" + this.category + "] " + text;
+        const text = LOGGER_PREFIX + "[ " + prefix + " ] [" + this.category + "] " + message;
         // output message
-        log(message);
+        log(text, ...optionalParams);
     }
 
-    public fatal(text: string) {
-        this.log(LogLevel.FATAL, text);
+    public fatal(message: any, ...optionalParams: any[]) {
+        this.log(LogLevel.FATAL, message, ...optionalParams);
     }
 
-    public error(text: string) {
-        this.log(LogLevel.ERROR, text);
+    public error(message: any, ...optionalParams: any[]) {
+        this.log(LogLevel.ERROR, message, ...optionalParams);
     }
 
-    public warn(text: string) {
-        this.log(LogLevel.WARN, text);
+    public warn(message: any, ...optionalParams: any[]) {
+        this.log(LogLevel.WARN, message, ...optionalParams);
     }
 
-    public info(text: string) {
-        this.log(LogLevel.INFO, text);
+    public info(message: any, ...optionalParams: any[]) {
+        this.log(LogLevel.INFO, message, ...optionalParams);
     }
 
-    public debug(text: string) {
-        this.log(LogLevel.DEBUG, text);
+    public debug(message: any, ...optionalParams: any[]) {
+        this.log(LogLevel.DEBUG, message, ...optionalParams);
     }
 
-    public verbose(text: string) {
-        this.log(LogLevel.VERBOSE, text);
+    public verbose(message: any, ...optionalParams: any[]) {
+        this.log(LogLevel.VERBOSE, message, ...optionalParams);
     }
 
     private category: string;

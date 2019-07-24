@@ -28,7 +28,7 @@ export default class RemoteEndpoint extends Endpoint {
         this.socket = socket;
 
         this.socket.receive(Message.CALL, (msg) => {
-            return this.local.callFunction(msg.id, msg.args);
+            return this.local.callFunction(msg.id, ...msg.args);
         });
         this.socket.receive(Message.FUNC_REGISTERED, (desc: types.IFuncDesc) => {
             const stub = StubCreator.createStub(desc, this.callFunction.bind(this));
@@ -42,6 +42,7 @@ export default class RemoteEndpoint extends Endpoint {
     }
 
     public callFunction(id: string, ...args: any): Promise<any> {
+        logger.debug("calling function \"" + id + "\" with", args);
         return this.socket.send(Message.CALL, { id, args }).then((reply: any) => {
             if (reply.error) {
                 // failed

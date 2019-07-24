@@ -11,7 +11,6 @@ export default class StubCreator {
     }
 
     public static createStub(desc: types.IFuncDesc, handler: (id: string, ...args: any) => Promise<any>): types.StubFunction {
-        console.log("Creating stub from", desc);
         // create function for wrapping handler function
         const stub: types.StubFunction = (...args) => handler(desc.id, ...args);
         // set function name

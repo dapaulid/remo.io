@@ -37,11 +37,11 @@ export default class LocalEndpoint extends Endpoint {
     }
 
     public callFunction(id: string, ...args: any): Promise<any> {
+        logger.debug("calling function \"" + id + "\" with", args);
         return new Promise((resolve, reject) => {
-            logger.info("Calling function " + id + " with " + args);
             const func = this.functions.get(id);
             if (func) {
-                resolve(func.apply(this, ...args));
+                resolve(func.apply(this, args));
             } else {
                 reject(new errors.RemoError(errors.L2.FUNC_NOT_FOUND, { id }));
             }
