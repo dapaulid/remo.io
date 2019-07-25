@@ -2,7 +2,7 @@
   "name": "remo.js",
   "version": "0.0.1",
   "description": "An intuitive, transparent and efficient RPC library.",
-  "main": "index.js",
+  "main": "dist/lib/index.js",
   "scripts": {
     "example": "gulp build && node example/server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

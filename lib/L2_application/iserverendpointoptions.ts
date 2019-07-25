@@ -8,16 +8,13 @@
  */
 //------------------------------------------------------------------------------
 
-import ServerEndpoint from './serverendpoint';
-import ClientEndpoint from './clientendpoint';
-import RemoteEndpoint from './remoteendpoint';
+import * as L1 from '../L1_transport';
 
-import IServerEndpointOptions from './iserverendpointoptions';
+export default interface IServerEndpointOptions extends L1.ISocketServerOptions {
 
-export {
-    ServerEndpoint, ClientEndpoint, RemoteEndpoint,
-    IServerEndpointOptions,
-};
+    /** object containing the functions the server should expose */
+    api?: any;
+}
 
 //------------------------------------------------------------------------------
 // end of file

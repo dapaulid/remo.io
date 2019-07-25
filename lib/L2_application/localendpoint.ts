@@ -57,7 +57,7 @@ export default class LocalEndpoint extends Endpoint {
                 this.registerFunctions(id, prop);
             } else {
                 // ignore
-                logger.debug("Skipping property " + id + " of type '" + type + '"');
+                logger.verbose("Skipping property " + id + " of type '" + type + '"');
             }
         }
     }

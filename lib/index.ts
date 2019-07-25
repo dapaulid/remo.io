@@ -8,16 +8,21 @@
  */
 //------------------------------------------------------------------------------
 
-import ServerEndpoint from './serverendpoint';
-import ClientEndpoint from './clientendpoint';
-import RemoteEndpoint from './remoteendpoint';
+/**
+ * This file is the entry point for node.js
+ */
 
-import IServerEndpointOptions from './iserverendpointoptions';
+import * as L2 from './L2_application';
 
-export {
-    ServerEndpoint, ClientEndpoint, RemoteEndpoint,
-    IServerEndpointOptions,
-};
+/** creates a new server instance */
+export function createServer(options: L2.IServerEndpointOptions): L2.ServerEndpoint {
+    return new L2.ServerEndpoint(options);
+}
+
+/** creates a new client instance */
+export function createClient(): L2.ClientEndpoint {
+    return new L2.ClientEndpoint();
+}
 
 //------------------------------------------------------------------------------
 // end of file

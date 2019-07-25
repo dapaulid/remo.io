@@ -1,22 +1,41 @@
+/*
+    This example illustrates how to setup and run a remo.js server
+*/
+
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var fs = require('fs');
 
-const RemoServer = require('../../dist/lib/server').default;
+const remo = require('../..');
 
 /*
-    create web server
+    configure and create web server
 */
 const app = express();
+// serve application files
 app.use(express.static(path.join(__dirname,  "../client")));
+// serve remo.js library
 app.use(express.static(path.join(__dirname,  "../../dist/browser")));
 
 const httpServer = http.createServer(app);
 
 /*
-    create rmi server
+    configure and create remo server
 */
-const rmiServer = new RemoServer({ httpServer });
+// define functions the server should expose to the client
+const api = {
+    hello: function (what) {
+        console.log("Hello " + what + " from client!");
+        return "Hello from server!";
+    },
+    echo: (param) => param,
+    // you can also expose builtins...
+    log: console.log,
+    // ... or even all functions of a module
+    fs,
+}
+const remoServer = remo.createServer({ httpServer, api });
 
 /*
     serve clients

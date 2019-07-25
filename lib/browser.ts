@@ -8,22 +8,23 @@
  */
 //------------------------------------------------------------------------------
 
-import * as L2 from './L2_application';
+/**
+ * This file is the entry point for browserify and populates the global "remo"
+ * object in the browser.
+ */
 
-console.log("Powered by remo.js");
+import { ClientEndpoint } from './L2_application';
 
-const client = new L2.ClientEndpoint();
-export let server = connect();
-
-export function connect(url?: string | null): L2.RemoteEndpoint {
-    const remote = client.connect(url);
-    remote.callFunction("hansli", { gugus: 1234 }, 777).then((result) => {
-        console.log("Function on server completed: " + JSON.stringify(result));
-    }).catch((err) => {
-        console.log("Function on server failed: " + err);
-    });
-    return remote;
+/** creates a new client instance */
+export function createClient(): ClientEndpoint {
+    return new ClientEndpoint();
 }
+
+/** default client instance */
+export const client = createClient();
+
+/** default server stub */
+export const server = client.connect();
 
 //------------------------------------------------------------------------------
 // end of file

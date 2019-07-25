@@ -39,7 +39,7 @@ gulp.task('build:ts', function () {
 
 gulp.task('build:browser', () => {
     return browserify({
-        entries: 'dist/lib/client.js',
+        entries: 'dist/lib/browser.js',
         standalone: 'remo',
     })
         .exclude('uws') // optional module of socket.io
