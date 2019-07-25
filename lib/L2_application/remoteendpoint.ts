@@ -23,6 +23,7 @@ const logger = new L0.Logger("L2:RemoteEndpoint");
 
 // messages used for communication
 enum Message {
+    SETUP = "setup",
     CALL = "call",
     FUNC_REGISTERED = "func-reg",
     FUNC_UNREGISTERED = "func-unreg",
@@ -36,6 +37,17 @@ export default class RemoteEndpoint extends Endpoint {
 
         this.local = local;
         this.socket = socket;
+        this.linkstate = L1.LinkState.DISCONNECTED;
+
+        this.setLinkState(this.socket.getState());
+        this.socket.onstatechanged = this.socketStateChanged.bind(this);
+
+        this.socket.receive(Message.SETUP, () => {
+            // setup done, we're ready
+            logger.info("setup complete");
+            this.setLinkState(L1.LinkState.CONNECTED);
+            return Promise.resolve();
+        });
 
         this.socket.receive(Message.CALL, (msg) => {
             return this.local.callFunction(msg.id, ...msg.args);
@@ -54,6 +66,7 @@ export default class RemoteEndpoint extends Endpoint {
     public callFunction(id: string, ...args: any): Promise<any> {
         logger.debug("calling function \"" + id + "\" with", args);
         return this.socket.send(Message.CALL, { id, args }).then((reply: any) => {
+            logger.debug("function \"" + id + "\" returned", reply);
             if (reply.error) {
                 // failed
                 return Promise.reject(errors.revive(reply.error));
@@ -85,8 +98,48 @@ export default class RemoteEndpoint extends Endpoint {
         });
     }
 
+    public setup() {
+        this.socket.send(Message.SETUP, null);
+    }
+
+    protected socketStateChanged(state: L1.LinkState, reason: errors.RemoError) {
+        // socket changed from connecting to connected?
+        if (this.linkstate === L1.LinkState.CONNECTING && state === L1.LinkState.CONNECTED) {
+            // yes -> we need to wait for SETUP message
+            return;
+        }
+        // change state according to socket state
+        this.setLinkState(state, reason);
+    }
+
+    protected setLinkState(state: L1.LinkState, reason?: errors.RemoError) {
+        // any actual change?
+        if (state === this.linkstate) {
+            // no -> nothing to do?
+            return;
+        }
+        // update state
+        this.linkstate = state;
+        // notify observers
+        this.emit('linkstatechanged', state, reason);
+        switch (state) {
+            case L1.LinkState.CONNECTED:
+                this.emit('connected');
+                break;
+            case L1.LinkState.DISCONNECTED:
+                this.emit('disconnected');
+                break;
+            case L1.LinkState.LINKDOWN:
+                this.emit('linkdown');
+                break;
+            default:
+                // do nothing
+        }
+    }
+
     protected local: LocalEndpoint;
     protected socket: L1.ISocket;
+    protected linkstate: L1.LinkState;
 }
 
 //------------------------------------------------------------------------------

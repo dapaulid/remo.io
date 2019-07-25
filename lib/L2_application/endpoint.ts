@@ -12,14 +12,15 @@ import IEndpoint from './iendpoint';
 
 import * as L0 from '../L0_system';
 import * as errors from '../errors';
-import { RemoteEndpoint } from '.';
+import { EventEmitter } from 'events';
 
 // create logger
 const logger = new L0.Logger("L2:Endpoint");
 
-export default abstract class Endpoint implements IEndpoint {
+export default abstract class Endpoint extends EventEmitter implements IEndpoint {
 
     constructor() {
+        super();
         this.functions = new Map();
         this.api = {};
     }

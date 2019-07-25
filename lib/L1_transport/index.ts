@@ -16,9 +16,11 @@ import ISocketServerOptions from './isocketserveroptions';
 import ClientSocket_SIO from './clientsocket-sio';
 import ServerSocket_SIO from './serversocket-sio';
 import SocketServer_SIO from './socketserver-sio';
+import LinkState from './linkstate';
 export {
     ISocket, ISocketServer, ISocketServerOptions,
     ClientSocket_SIO, ServerSocket_SIO, SocketServer_SIO,
+    LinkState,
 };
 
 //------------------------------------------------------------------------------

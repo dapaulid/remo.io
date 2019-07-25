@@ -85,16 +85,22 @@ export default class LocalEndpoint extends Endpoint {
         });
     }
 
-    protected createRemoteEndpoint(socket: L1.ISocket): RemoteEndpoint {
-        const remote = new RemoteEndpoint(this, socket);
-        this.remotes.add(remote);
-        logger.info("RemoteEndpoint created");
-        // send function descriptors
-        this.functions.forEach((func: Function, id: string) => {
-            const desc = StubCreator.createDescriptor(id, func);
-            remote.funcRegistered(desc);
+    protected createRemoteEndpoint(socket: L1.ISocket): Promise<RemoteEndpoint> {
+        return new Promise((resolve, reject) => {
+            const remote = new RemoteEndpoint(this, socket);
+            this.remotes.add(remote);
+            logger.info("RemoteEndpoint created");
+            // send function descriptors
+            this.functions.forEach((func: Function, id: string) => {
+                const desc = StubCreator.createDescriptor(id, func);
+                remote.funcRegistered(desc);
+            });
+            // signal setup complete
+            remote.once('connected', () => {
+                resolve(remote);
+            });
+            remote.setup();
         });
-        return remote;
     }
 
     protected createFunctionId(func: Function): string {

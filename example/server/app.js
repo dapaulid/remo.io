@@ -1,5 +1,5 @@
 /*
-    This example illustrates how to setup and run a remo.js server
+    This example demonstrates how to setup and run a remo.js server
 */
 
 var express = require('express');

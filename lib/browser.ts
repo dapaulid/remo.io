@@ -13,7 +13,7 @@
  * object in the browser.
  */
 
-import { ClientEndpoint } from './L2_application';
+import { ClientEndpoint, RemoteEndpoint } from './L2_application';
 
 /** creates a new client instance */
 export function createClient(): ClientEndpoint {
@@ -21,10 +21,22 @@ export function createClient(): ClientEndpoint {
 }
 
 /** default client instance */
-export const client = createClient();
+export const client: ClientEndpoint = createClient();
 
 /** default server stub */
-export const server = client.connect();
+export let server: RemoteEndpoint | null = null;
+
+/** accessor for default server using promise */
+export function getServer(): Promise<RemoteEndpoint> {
+    if (server == null) {
+        return client.connect().then((srv) => {
+            server = srv;
+            return server;
+        });
+    } else {
+        return Promise.resolve(server);
+    }
+}
 
 //------------------------------------------------------------------------------
 // end of file

@@ -1,10 +1,14 @@
 /*
-    This example illustrates how to access a remo.js server from a browser
+    This example demonstrates how to access a remo.js server from the browser
 */
 
 // call a remote function on our server
-remo.server.callFunction("hello", "world").then((result) => {
-    console.log("Function on server completed:", result);
-}).catch((err) => {
-    console.error("Function on server failed:", err);
-});
+remo.getServer().then((server) =>{
+    
+    server.api.hello("world").then((result) => {
+        console.log("Function on server completed:", result);
+    }).catch((err) => {
+        console.error("Function on server failed:", err);
+    });
+        
+})
