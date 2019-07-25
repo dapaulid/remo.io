@@ -6,14 +6,6 @@ const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 
-const PATHS = {
-    DEV: 'dev',
-    LIB_SRC: 'lib/**/*.ts',
-    TEST_SRC: 'test/**/*.ts',
-    LIB_DEV: 'dev/lib/**/*.js',
-    TEST_DEV: 'dev/test/**/*.js',
-    PROJ: ['*.js', '*.json'],
-}
 
 const tsProject = ts.createProject('tsconfig.json');
 
@@ -40,14 +32,14 @@ function compileTypeScript(src, dst, errhandler) {
 }
 
 gulp.task('build:ts', function () {
-    return compileTypeScript(PATHS.LIB_SRC, 'dev/lib/', function (err) {
+    return compileTypeScript('lib/**/*.ts', 'dist/lib/', function (err) {
         //taskFailed('build', EXITCODES.BUILD_FAILED, err);
     });
 });
 
 gulp.task('build:browser', () => {
     return browserify({
-        entries: 'dev/lib/client.js',
+        entries: 'dist/lib/client.js',
         standalone: 'remo',
     })
         .exclude('uws') // optional module of socket.io
@@ -57,7 +49,7 @@ gulp.task('build:browser', () => {
         //.pipe(uglify())
         //.pipe(sourcemaps.init({loadMaps: true}))
         //.pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest('./dev/browser'));
+        .pipe(gulp.dest('./dist/browser'));
 });
 
 gulp.task('build', gulp.series('build:ts', 'build:browser'));

@@ -2,15 +2,14 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 
-const RemoServer = require('../../dev/lib/server').default;
-const client = require('../../dev/lib/client');
+const RemoServer = require('../../dist/lib/server').default;
 
 /*
     create web server
 */
 const app = express();
 app.use(express.static(path.join(__dirname,  "../client")));
-app.use(express.static(path.join(__dirname,  "../../dev/browser")));
+app.use(express.static(path.join(__dirname,  "../../dist/browser")));
 
 const httpServer = http.createServer(app);
 
