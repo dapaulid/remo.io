@@ -23,8 +23,8 @@ export default class ClientEndpoint extends LocalEndpoint {
         super();
     }
 
-    public connect(url?: string | null): Promise<RemoteEndpoint> {
-        const socket = new L1.ClientSocket_SIO(url || "http://localhost:3000");
+    public connect(url?: string): Promise<RemoteEndpoint> {
+        const socket = new L1.ClientSocket_SIO(url);
         socket.connect();
 
         return this.createRemoteEndpoint(socket);

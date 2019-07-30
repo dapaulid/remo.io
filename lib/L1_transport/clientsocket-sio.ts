@@ -20,11 +20,11 @@ const logger = new L0.Logger("L1:CLientSocket_SIO");
 
 export default class CLientSocket_SIO extends Socket {
 
-    constructor(url: string) {
+    constructor(url?: string) {
 
         super();
         this.socket = null;
-        this.url = url;
+        this.url = url || ""; // use window.location
 
         this.receivers = new Map();
     }
