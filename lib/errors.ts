@@ -21,7 +21,7 @@ export function revive(err: any): Error {
         return new RemoError({ label: err.label, code: err.code, text: err.text }, err.details);
     } else {
         // unknown error
-        return new RemoteError(err.message, err);
+        return new RemoteError(err.message || err.toString(), err);
     }
 }
 
