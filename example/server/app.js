@@ -29,6 +29,15 @@ const api = {
         console.log("Hello " + what + " from client!");
         return "Hello from server!";
     },
+    somePromise: function(value) {
+        return new Promise((resolve, reject) => {
+            if (value != null) {
+                resolve(value+1)
+            } else {
+                reject("Specify a value!");
+            }
+        });
+    },
     echo: (param) => param,
     // you can also expose builtins...
     log: console.log,
