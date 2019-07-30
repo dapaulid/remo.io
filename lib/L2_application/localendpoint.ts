@@ -24,6 +24,8 @@ export default class LocalEndpoint extends Endpoint {
     constructor() {
         super();
         this.remotes = new Set();
+        this.anonymous = new WeakMap();
+        this.nextAnonymousNum = 0;
     }
 
     public registerFunction(id: string, func: Function) {
@@ -73,6 +75,18 @@ export default class LocalEndpoint extends Endpoint {
         return true;
     }
 
+    public internalizeFunction(func: Function, prefix?: string): string {
+        // do we already know this function?
+        let id = this.anonymous.get(func);
+        if (!id) {
+            // no -> create unique id and add it
+            id = (prefix || "") + '#' + this.nextAnonymousNum++;
+            this.anonymous.set(func, id);
+            this.registerFunction(id, func);
+        }
+        return id;
+    }
+
     public callFunction(id: string, ...args: any): Promise<any> {
         logger.debug("calling function \"" + id + "\" with", args);
         return new Promise((resolve, reject) => {
@@ -109,6 +123,9 @@ export default class LocalEndpoint extends Endpoint {
     }
 
     protected remotes: Set<RemoteEndpoint>;
+
+    protected anonymous: WeakMap<Function, string>;
+    protected nextAnonymousNum: number;
 }
 
 //------------------------------------------------------------------------------
