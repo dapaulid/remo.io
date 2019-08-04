@@ -9,33 +9,26 @@
 //------------------------------------------------------------------------------
 
 import LocalEndpoint from './localendpoint';
-import IServerEndpointOptions from './iserverendpointoptions';
+import RemoteEndpoint from './remoteendpoint';
 
 import * as L1 from '../L1_transport';
 import * as L0 from '../L0_system';
 
 // create logger
-const logger = new L0.Logger("L2:ServerEndpoint");
+const logger = new L0.Logger("L4:ClientEndpoint");
 
-export default class ServerEndpoint extends LocalEndpoint {
+export default class ClientEndpoint extends LocalEndpoint {
 
-    constructor(options: IServerEndpointOptions) {
+    constructor() {
         super();
-        this.server = new L1.SocketServer_SIO(options);
-        this.server.onconnected = this.connected.bind(this);
-        // TODO disconnect?
-
-        // register functions at root
-        if (options.api) {
-            this.registerFunctions("", options.api);
-        }
     }
 
-    protected connected(socket: L1.ISocket): void {
-        this.createRemoteEndpoint(socket);
-    }
+    public connect(url?: string): Promise<RemoteEndpoint> {
+        const socket = new L1.ClientSocket_SIO(url);
+        socket.connect();
 
-    protected server: L1.ISocketServer;
+        return this.createRemoteEndpoint(socket);
+    }
 
 }
 

@@ -13,7 +13,7 @@
  * object in the browser.
  */
 
-import { ClientEndpoint, RemoteEndpoint } from './L2_application';
+import { ClientEndpoint, RemoteEndpoint } from './L4_rcp';
 
 /** creates a new client instance */
 export function createClient(): ClientEndpoint {

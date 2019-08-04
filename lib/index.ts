@@ -12,16 +12,16 @@
  * This file is the entry point for node.js
  */
 
-import * as L2 from './L2_application';
+import * as L4 from './L4_rcp';
 
 /** creates a new server instance */
-export function createServer(options: L2.IServerEndpointOptions): L2.ServerEndpoint {
-    return new L2.ServerEndpoint(options);
+export function createServer(options: L4.IServerEndpointOptions): L4.ServerEndpoint {
+    return new L4.ServerEndpoint(options);
 }
 
 /** creates a new client instance */
-export function createClient(): L2.ClientEndpoint {
-    return new L2.ClientEndpoint();
+export function createClient(): L4.ClientEndpoint {
+    return new L4.ClientEndpoint();
 }
 
 //------------------------------------------------------------------------------

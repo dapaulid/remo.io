@@ -19,7 +19,7 @@ import * as errors from '../errors';
 import StubCreator from './stubcreator';
 
 // create logger
-const logger = new L0.Logger("L2:RemoteEndpoint");
+const logger = new L0.Logger("L4:RemoteEndpoint");
 
 // messages used for communication
 enum Message {

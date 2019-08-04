@@ -17,7 +17,7 @@ import * as L0 from '../L0_system';
 import * as errors from '../errors';
 
 // create logger
-const logger = new L0.Logger("L2:LocalEndpoint");
+const logger = new L0.Logger("L4:LocalEndpoint");
 
 export default class LocalEndpoint extends Endpoint {
 
@@ -94,7 +94,7 @@ export default class LocalEndpoint extends Endpoint {
             if (func) {
                 resolve(func.apply(this, args));
             } else {
-                reject(new errors.RemoError(errors.L2.FUNC_NOT_FOUND, { id }));
+                reject(new errors.RemoError(errors.L4.FUNC_NOT_FOUND, { id }));
             }
         });
     }

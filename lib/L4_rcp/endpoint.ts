@@ -15,7 +15,7 @@ import * as errors from '../errors';
 import { EventEmitter } from 'events';
 
 // create logger
-const logger = new L0.Logger("L2:Endpoint");
+const logger = new L0.Logger("L4:Endpoint");
 
 export default abstract class Endpoint extends EventEmitter implements IEndpoint {
 
