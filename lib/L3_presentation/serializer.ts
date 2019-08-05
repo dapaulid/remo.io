@@ -1,4 +1,5 @@
-type SerializedValue = Primitive | ISerializedObject;
+type SerializedValue = SerializedItem | SerializedItem[];
+type SerializedItem = Primitive | ISerializedObject;
 type Primitive = boolean | string | number | null;
 
 interface ISerializedObject {
@@ -15,6 +16,10 @@ import RemoError from '../remoerror';
 
 function isObject(v: any): v is ISerializedObject {
     return typeof v === 'object' && v !== null;
+}
+
+function isArray(v: any): v is any[] {
+    return Array.isArray(v);
 }
 
 export default class Serializer {
@@ -64,14 +69,18 @@ export default class Serializer {
         }
         if (isObject(value)) {
             // handle object
-            const ctorname = value.constructor.name;
-            const handler = this.handler.get(ctorname);
-            if (!handler) {
-                throw new RemoError(errors.SER_UNKNOWN_CLASS, { classname: ctorname });
+            if (isArray(value)) {
+                return value.map(this.serialize, this) as SerializedValue;
+            } else {
+                const ctorname = value.constructor.name;
+                const handler = this.handler.get(ctorname);
+                if (!handler) {
+                    throw new RemoError(errors.SER_UNKNOWN_CLASS, { classname: ctorname });
+                }
+                return {
+                    [ctorname]: handler.serialize(value),
+                };
             }
-            return {
-                [ctorname]: handler.serialize(value),
-            };
         } else {
             // handle primitive
             return value;
@@ -81,26 +90,29 @@ export default class Serializer {
     public deserialize(serialized: SerializedValue): any {
         if (isObject(serialized)) {
             // handle object
-            const keys = Object.keys(serialized);
-            if (keys.length !== 1) {
-                throw new RemoError(errors.SERIALIZED_BAD_PROP);
-            }
-            const typename = keys[0];
-            const value = serialized[typename];
-            // handle constants (NaN, Infinity, undefined, ...)
-            if (typename === 'const' && typeof value === 'string') {
-                const constvalue = this.constToValue.get(value);
-                if (constvalue === null) {
-                    throw new RemoError(errors.DESER_UNKNOWN_CONST, { constname: value });
+            if (isArray(serialized)) {
+                return serialized.map(this.deserialize, this);
+            } else {
+                const keys = Object.keys(serialized);
+                if (keys.length !== 1) {
+                    throw new RemoError(errors.SERIALIZED_BAD_PROP);
                 }
-                return constvalue;
+                const typename = keys[0];
+                const value = serialized[typename];
+                // handle constants (NaN, Infinity, undefined, ...)
+                if (typename === 'const' && typeof value === 'string') {
+                    const constvalue = this.constToValue.get(value);
+                    if (constvalue === null) {
+                        throw new RemoError(errors.DESER_UNKNOWN_CONST, { constname: value });
+                    }
+                    return constvalue;
+                }
+                const handler = this.handler.get(typename);
+                if (!handler) {
+                    throw new RemoError(errors.DESER_UNKNOWN_CLASS, { classname: typename });
+                }
+                return handler.deserialize(value);
             }
-            const handler = this.handler.get(typename);
-            if (!handler) {
-                throw new RemoError(errors.DESER_UNKNOWN_CLASS, { classname: typename });
-            }
-            return handler.deserialize(value);
-
         } else {
             // handle primitive
             return serialized;
