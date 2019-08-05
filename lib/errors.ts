@@ -9,11 +9,12 @@
 //------------------------------------------------------------------------------
 
 import * as L4 from './L4_rcp/errors';
+import * as L3 from './L3_presentation/errors';
 import * as L1 from './L1_transport/errors';
 import RemoError from './remoerror';
 import RemoteError from './remoteerror';
 
-export { RemoError, L1, L4 };
+export { RemoError, L1, L3, L4 };
 
 export function revive(err: any): Error {
     if (err && err.name === "RemoError") {

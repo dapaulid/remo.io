@@ -19,7 +19,9 @@ export default class RemoError extends Error implements IErrorDesc {
 
     constructor(err: IErrorDesc, details?: any) {
         // format error message
-        const message = '[' + err.label + '] ' + err.text + ' (code ' + formatErrorCode(err.code) + ')';
+        const message = '[' + err.label + '] '
+            + substitute(err.text, details)
+            + ' (code ' + formatErrorCode(err.code) + ')';
         // call base
         super(message);
         // set properties
@@ -38,6 +40,13 @@ export default class RemoError extends Error implements IErrorDesc {
 
 function formatErrorCode(code: number) {
     return '0x' + ("00000000" + code.toString(16).toUpperCase()).substr(-8);
+}
+
+function substitute(s: string, subst: any): string {
+    return s.replace(/\${\w+}/g, (m: string) => {
+        const placeholder = m.substring(2, m.length - 1);
+        return subst[placeholder] || m;
+    });
 }
 
 //------------------------------------------------------------------------------

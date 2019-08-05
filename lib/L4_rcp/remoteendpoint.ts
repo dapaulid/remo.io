@@ -13,6 +13,7 @@ import LocalEndpoint from './localendpoint';
 
 import * as types from './types';
 
+import * as L3 from '../L3_presentation';
 import * as L1 from '../L1_transport';
 import * as L0 from '../L0_system';
 import * as errors from '../errors';
@@ -38,6 +39,8 @@ export default class RemoteEndpoint extends Endpoint {
         this.local = local;
         this.socket = socket;
         this.linkstate = L1.LinkState.DISCONNECTED;
+
+        this.serializer = new L3.Serializer();
 
         this.setLinkState(this.socket.getState());
         this.socket.onstatechanged = this.socketStateChanged.bind(this);
@@ -140,6 +143,8 @@ export default class RemoteEndpoint extends Endpoint {
     protected local: LocalEndpoint;
     protected socket: L1.ISocket;
     protected linkstate: L1.LinkState;
+
+    protected serializer: L3.Serializer;
 }
 
 //------------------------------------------------------------------------------
