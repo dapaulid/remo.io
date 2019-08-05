@@ -42,6 +42,19 @@ export default class RemoteEndpoint extends Endpoint {
 
         this.serializer = new L3.Serializer();
 
+        // add function serializer
+        this.serializer.addHandler("Function", {
+            serialize: (func: Function) => {
+                return this.local.internalizeFunction(func, "auto");
+            }, deserialize: (id: string) => {
+                const func = this.functions.get(id);
+                if (!func) {
+                    throw new errors.RemoError(errors.L4.DESER_UNKNOWN_FUNC, { func: id });
+                }
+                return func;
+            },
+        });
+
         this.setLinkState(this.socket.getState());
         this.socket.onstatechanged = this.socketStateChanged.bind(this);
 
@@ -52,7 +65,8 @@ export default class RemoteEndpoint extends Endpoint {
             return Promise.resolve();
         });
 
-        this.socket.receive(Message.CALL, (msg) => {
+        this.socket.receive(Message.CALL, (serialized) => {
+            const msg = this.serializer.deserialize(serialized);
             return this.local.callFunction(msg.id, ...msg.args);
         });
         this.socket.receive(Message.FUNC_REGISTERED, (desc: types.IFuncDesc) => {
@@ -68,7 +82,9 @@ export default class RemoteEndpoint extends Endpoint {
 
     public callFunction(id: string, ...args: any): Promise<any> {
         logger.debug("calling function \"" + id + "\" with", args);
-        return this.socket.send(Message.CALL, { id, args }).then((reply: any) => {
+        const msg = { id, args };
+        const serialized = this.serializer.serialize(msg);
+        return this.socket.send(Message.CALL, serialized).then((reply: any) => {
             logger.debug("function \"" + id + "\" returned", reply);
             if (reply.error) {
                 // failed

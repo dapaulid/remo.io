@@ -38,6 +38,10 @@ const api = {
             }
         });
     },
+    callMeBack: function(callback) {
+        callback("Server called you back");
+        callback("Server called you back again");
+    },
     echo: (param) => param,
     // you can also expose builtins...
     log: console.log,

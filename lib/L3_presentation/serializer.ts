@@ -14,8 +14,8 @@ interface ISerializer {
 import * as errors from './errors';
 import RemoError from '../remoerror';
 
-function isObject(v: any): v is ISerializedObject {
-    return typeof v === 'object' && v !== null;
+function isRefType(v: any): v is ISerializedObject {
+    return (typeof v === 'object' || typeof v === 'function') && v !== null;
 }
 
 function isArray(v: any): v is any[] {
@@ -67,7 +67,7 @@ export default class Serializer {
         if (constname) {
             return { const: constname };
         }
-        if (isObject(value)) {
+        if (isRefType(value)) {
             // handle object
             if (isArray(value)) {
                 return value.map(this.serialize, this) as SerializedValue;
@@ -88,7 +88,7 @@ export default class Serializer {
     }
 
     public deserialize(serialized: SerializedValue): any {
-        if (isObject(serialized)) {
+        if (isRefType(serialized)) {
             // handle object
             if (isArray(serialized)) {
                 return serialized.map(this.deserialize, this);
@@ -126,7 +126,7 @@ export default class Serializer {
         return deserialized;
     }
 
-    protected addHandler(name: string, serializer: ISerializer) {
+    public addHandler(name: string, serializer: ISerializer) {
         this.handler.set(name, serializer);
     }
 

@@ -24,12 +24,16 @@ export default class LocalEndpoint extends Endpoint {
     constructor() {
         super();
         this.remotes = new Set();
-        this.anonymous = new WeakMap();
+        this.funcToId = new WeakMap();
         this.nextAnonymousNum = 0;
     }
 
     public registerFunction(id: string, func: Function) {
         super.registerFunction(id, func);
+        // remember function
+        // TODO move to base
+        // TODO unregister?
+        this.funcToId.set(func, id);
         // update remotes
         const desc = StubCreator.createDescriptor(id, func);
         this.remotes.forEach((remote) => {
@@ -77,14 +81,17 @@ export default class LocalEndpoint extends Endpoint {
 
     public internalizeFunction(func: Function, prefix?: string): string {
         // do we already know this function?
-        let id = this.anonymous.get(func);
+        let id = this.funcToId.get(func);
         if (!id) {
             // no -> create unique id and add it
             id = (prefix || "") + '#' + this.nextAnonymousNum++;
-            this.anonymous.set(func, id);
             this.registerFunction(id, func);
         }
         return id;
+    }
+
+    public getFunctionId(func: Function) {
+        return this.funcToId.get(func);
     }
 
     public callFunction(id: string, ...args: any): Promise<any> {
@@ -124,7 +131,7 @@ export default class LocalEndpoint extends Endpoint {
 
     protected remotes: Set<RemoteEndpoint>;
 
-    protected anonymous: WeakMap<Function, string>;
+    protected funcToId: WeakMap<Function, string>;
     protected nextAnonymousNum: number;
 }
 
