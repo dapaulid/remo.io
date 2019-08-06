@@ -38,9 +38,9 @@ const api = {
             }
         });
     },
-    callMeBack: function(callback) {
-        callback("Server called you back");
-        callback("Server called you back again");
+    callMeBack: function(cb1, cb2) {
+        cb1("Server called you back");
+        cb2("Server called you back again");
     },
     echo: (param) => param,
     // you can also expose builtins...

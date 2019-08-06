@@ -37,11 +37,16 @@ export default class ServerSocket_SIO extends Socket {
     public receive(type: string, handler: (message: any) => Promise<any>): void {
         if (this.socket) {
             this.socket.on("msg_" + type, (message: any, callback: (reply: any) => void) => {
-                handler(message).then((result) => {
-                    callback({ result });
-                }).catch((error) => {
+                try {
+                    handler(message).then((result) => {
+                        callback({ result });
+                    }).catch((error) => {
+                        callback({ error: errors.serialize(error) });
+                    });
+                } catch (error) {
+                    logger.error('error handling message "' + type + '":',  error);
                     callback({ error: errors.serialize(error) });
-                });
+                }
             });
         }
     }
