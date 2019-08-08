@@ -1,5 +1,5 @@
 /*
-    This example demonstrates how to access a remo.js server from the browser
+    This example demonstrates how to access a remo.io server from the browser
 */
 
 // call a remote function on our server

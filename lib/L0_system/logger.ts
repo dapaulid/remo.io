@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // string prepended to each trace
-const LOGGER_PREFIX = "remo.js: ";
+const LOGGER_PREFIX = "remo.io: ";
 
 // predefined log levels
 export enum LogLevel {

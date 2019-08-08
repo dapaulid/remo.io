@@ -44,7 +44,7 @@ gulp.task('build:browser', () => {
     })
         .exclude('uws') // optional module of socket.io
         .bundle()
-        .pipe(source('remo.js'))
+        .pipe(source('remo.io'))
         .pipe(buffer())
         //.pipe(uglify())
         //.pipe(sourcemaps.init({loadMaps: true}))

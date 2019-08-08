@@ -1,5 +1,5 @@
 /*
-    This example demonstrates how to setup and run a remo.js server
+    This example demonstrates how to setup and run a remo.io server
 */
 
 var express = require('express');
@@ -15,7 +15,7 @@ const remo = require('../..');
 const app = express();
 // serve application files
 app.use(express.static(path.join(__dirname,  "../client")));
-// serve remo.js library
+// serve remo.io library
 app.use(express.static(path.join(__dirname,  "../../dist/browser")));
 
 const httpServer = http.createServer(app);

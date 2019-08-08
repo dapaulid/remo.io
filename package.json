@@ -1,5 +1,5 @@
 {
-  "name": "remo.js",
+  "name": "remo.io",
   "version": "0.0.1",
   "description": "An intuitive, transparent and efficient RPC library.",
   "main": "dist/lib/index.js",
