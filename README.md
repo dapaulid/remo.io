@@ -1,3 +1,5 @@
+[![NPM version](https://badge.fury.io/js/remo.io.svg)](https://www.npmjs.com/package/remo.io)
+
 # Remo.IO
 An intuitive, robust and efficient RPC library for Node.js and the browser.
 
