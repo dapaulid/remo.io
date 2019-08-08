@@ -2,12 +2,6 @@
   "name": "remo.io",
   "version": "0.0.1",
   "description": "An intuitive, robust and efficient RPC library for Node.js and the browser.",
-  "main": "dist/lib/index.js",
-  "scripts": {
-    "dev": "node_modules/.bin/gulp",
-    "example": "node_modules/.bin/gulp build && node example/server/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "rpc",
     "rmi",
@@ -17,6 +11,16 @@
   ],
   "author": "Daniel Pauli <dapaulid@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dapaulid/remo.io"
+  },
+  "main": "dist/lib/index.js",
+  "scripts": {
+    "dev": "node_modules/.bin/gulp",
+    "example": "node_modules/.bin/gulp build && node example/server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "socket.io": "^2.2.0"
   },
