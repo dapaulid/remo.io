@@ -1,0 +1,55 @@
+# Remo.IO
+An intuitive, robust and efficient RPC library for Node.js and the browser.
+
+## Purpose
+
+This library allows to expose any functions on your Node.js server so that they can be called from the browser just as if they were normal, local JavaScript functions. Callback functions will be passed as reference, allowing the server in turn to call functions directly on the client.
+
+Remo.IO aims to handle serialization of arbitrary objects (passed by value), take care of session and reconnection handling as well as properly propagate errors between server and client. It uses [Socket.IO](https://www.npmjs.com/package/socket.io) for transport.
+
+## Installation
+```
+npm install remo.io
+```
+
+## Usage
+
+### Server
+
+```javascript
+const remo = require('remo.io');
+
+// define functions the server should expose to the client
+const api = {
+    hello: function (what) {
+        console.log("Hello " + what + " from client!");
+        return "Hello from server!";
+    },
+    // you can also expose builtins...
+    log: console.log,
+    // ... or even all functions of a module
+    fs
+}
+const remoServer = remo.createServer({ httpServer, api });
+```
+
+### Client
+
+```javascript
+// call a remote function on our server
+remo.getServer().then((server) =>{
+    
+    server.api.hello("world").then((result) => {
+        console.log("Function on server completed:", result);
+    }).catch((err) => {
+        console.error("Function on server failed:", err);
+    });
+        
+})
+```
+
+For a full example, run:
+
+```
+npm run example
+```
