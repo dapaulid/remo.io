@@ -1,7 +1,7 @@
 {
   "name": "remo.io",
   "version": "0.0.1",
-  "description": "An intuitive, transparent and efficient RPC library.",
+  "description": "An intuitive, robust and efficient RPC library for Node.js and the browser.",
   "main": "dist/lib/index.js",
   "scripts": {
     "dev": "node_modules/.bin/gulp",
@@ -10,7 +10,10 @@
   },
   "keywords": [
     "rpc",
-    "rmi"
+    "rmi",
+    "realtime",
+    "socket",
+    "websocket"
   ],
   "author": "Daniel Pauli <dapaulid@gmail.com>",
   "license": "MIT",
@@ -31,8 +34,5 @@
     "typescript": "^3.5.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
-  },
-  "browser": {
-    "ws": "./browser/ws.js"
   }
 }
