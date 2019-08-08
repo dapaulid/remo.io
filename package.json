@@ -1,6 +1,6 @@
 {
   "name": "remo.io",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An intuitive, robust and efficient RPC library for Node.js and the browser.",
   "keywords": [
     "rpc",
