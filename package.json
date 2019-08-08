@@ -4,7 +4,8 @@
   "description": "An intuitive, transparent and efficient RPC library.",
   "main": "dist/lib/index.js",
   "scripts": {
-    "example": "gulp build && node example/server/app.js",
+    "dev": "node_modules/.bin/gulp",
+    "example": "node_modules/.bin/gulp build && node example/server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

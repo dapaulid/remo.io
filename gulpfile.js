@@ -53,3 +53,5 @@ gulp.task('build:browser', () => {
 });
 
 gulp.task('build', gulp.series('build:ts', 'build:browser'));
+
+gulp.task('default', gulp.series('build'));
