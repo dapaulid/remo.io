@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "node_modules/.bin/gulp",
     "example": "node_modules/.bin/gulp build && node example/server/app.js",
-    "test": "echo \"To be done...\" && exit 0"
+    "test": "echo \"To be done...\" && exit 0",
+    "release": "np"
   },
   "dependencies": {
     "socket.io": "^2.2.0"
