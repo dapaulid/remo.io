@@ -6,14 +6,20 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>remo.io example</title>
+  <title>Remo.io Example</title>
 
   <script src="remo.io" type="text/javascript"></script>
   <script src="index.js" type="text/javascript"></script>
 </head>
 
 <body>
-    <p>This is the remo.io RPC example</p>
+    <h1>Remo.io Example</h1>
+    <p>Open the developer console and check the <strong>remo.server.api</strong> object to call some functions on the server, e.g.</p>
+    <code>
+      await remo.server.api.hello("world")
+      <br><br>
+      await remo.server.api.fs.readFileSync('./package.json', 'utf8')
+    </code>
 </body>
 
 </html>
