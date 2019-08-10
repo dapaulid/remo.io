@@ -18,7 +18,7 @@ npm install remo.io
 
 ### Server
 
-```javascript
+```js
 const remo = require('remo.io');
 
 // define functions the server should expose to the client
@@ -37,7 +37,7 @@ const remoServer = remo.createServer({ httpServer, api });
 
 ### Client
 
-```javascript
+```js
 // call a remote function on our server
 remo.getServer().then((server) =>{
     
@@ -54,4 +54,18 @@ For a full example, run:
 
 ```
 npm run example
+```
+
+## Debugging
+
+Remo.io uses [debug](https://www.npmjs.com/package/debug) to output traces, which allows to selectively enable debug output.
+
+For the server, set the DEBUG environment variable before starting your app:
+```bash
+DEBUG=remo.io:* node myapp
+```
+
+In the browser, set the following variable using the developer console and reload your app:
+```js
+localStorage.debug = "remo.io:*"
 ```

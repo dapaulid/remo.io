@@ -28,7 +28,7 @@ export default abstract class Endpoint extends EventEmitter implements IEndpoint
     public abstract callFunction(id: string, ...args: any): Promise<any>;
 
     public registerFunction(id: string, func: Function) {
-        logger.info("registering function: " + id);
+        logger.debug("registering function: " + id);
         this.functions.set(id, func);
 
         // select api object according to id path
@@ -56,7 +56,7 @@ export default abstract class Endpoint extends EventEmitter implements IEndpoint
     }
 
     public unregisterFunction(id: string): boolean {
-        logger.info("unregistering function: " + id);
+        logger.debug("unregistering function: " + id);
         return this.functions.delete(id);
     }
 

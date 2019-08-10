@@ -110,7 +110,7 @@ export default class LocalEndpoint extends Endpoint {
         return new Promise((resolve, reject) => {
             const remote = new RemoteEndpoint(this, socket);
             this.remotes.add(remote);
-            logger.info("RemoteEndpoint created");
+            logger.debug("RemoteEndpoint created");
             // send function descriptors
             this.functions.forEach((func: Function, id: string) => {
                 const desc = StubCreator.createDescriptor(id, func);

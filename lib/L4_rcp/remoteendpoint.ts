@@ -60,7 +60,7 @@ export default class RemoteEndpoint extends Endpoint {
 
         this.socket.receive(Message.SETUP, () => {
             // setup done, we're ready
-            logger.info("setup complete");
+            logger.debug("setup complete");
             this.setLinkState(L1.LinkState.CONNECTED);
             return Promise.resolve();
         });

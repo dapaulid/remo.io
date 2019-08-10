@@ -8,8 +8,10 @@
  */
 //------------------------------------------------------------------------------
 
+import debug, { Debug } from 'debug';
+
 // string prepended to each trace
-const LOGGER_PREFIX = "remo.io: ";
+const LOGGER_PREFIX = "remo.io";
 
 // predefined log levels
 export enum LogLevel {
@@ -36,6 +38,7 @@ export default class Logger {
 
     constructor(category: string) {
         this.category = category;
+        this.dbg = debug(LOGGER_PREFIX + ':' + category);
     }
 
     protected log(level: LogLevel, message: any, ...optionalParams: any[]) {
@@ -48,7 +51,7 @@ export default class Logger {
         const ll = LOG_LEVELS[level] || {};
         const prefix = ll.prefix || level.toString();
         const log = ll.log ? (console as any)[ll.log] : console.log;
-        const text = LOGGER_PREFIX + "[ " + prefix + " ] [" + this.category + "] " + message;
+        const text = LOGGER_PREFIX + ": [ " + prefix + " ] [" + this.category + "] " + message;
         // output message
         log(text, ...optionalParams);
     }
@@ -70,14 +73,15 @@ export default class Logger {
     }
 
     public debug(message: any, ...optionalParams: any[]) {
-        this.log(LogLevel.DEBUG, message, ...optionalParams);
+        this.dbg(message, ...optionalParams);
     }
 
     public verbose(message: any, ...optionalParams: any[]) {
-        this.log(LogLevel.VERBOSE, message, ...optionalParams);
+        this.dbg(message, ...optionalParams);
     }
 
     private category: string;
+    private dbg: debug.Debugger;
 }
 
 //------------------------------------------------------------------------------
