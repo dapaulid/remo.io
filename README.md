@@ -50,9 +50,12 @@ remo.getServer().then((server) =>{
 })
 ```
 
-For a full example, run:
+For a full example, do the following:
 
-```
+```bash
+git clone https://github.com/dapaulid/remo.io
+cd remo.io
+npm install
 npm run example
 ```
 
