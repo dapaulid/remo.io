@@ -1,0 +1,223 @@
+{
+  "query": "https://api.npms.io/v2/package/remo.io",
+  "result": {
+    "analyzedAt": "2019-08-08T23:09:28.670Z",
+    "collected": {
+      "metadata": {
+        "name": "remo.io",
+        "scope": "unscoped",
+        "version": "0.1.2",
+        "description": "An intuitive, robust and efficient RPC library for Node.js and the browser.",
+        "keywords": [
+          "rpc",
+          "rmi",
+          "realtime",
+          "socket",
+          "websocket"
+        ],
+        "date": "2019-08-08T23:09:17.745Z",
+        "author": {
+          "name": "Daniel Pauli",
+          "email": "dapaulid@gmail.com"
+        },
+        "publisher": {
+          "username": "dapaulid",
+          "email": "dapaulid+npm@gmail.com"
+        },
+        "maintainers": [
+          {
+            "username": "dapaulid",
+            "email": "dapaulid+npm@gmail.com"
+          }
+        ],
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/dapaulid/remo.io.git"
+        },
+        "links": {
+          "npm": "https://www.npmjs.com/package/remo.io",
+          "homepage": "https://github.com/dapaulid/remo.io#readme",
+          "repository": "https://github.com/dapaulid/remo.io",
+          "bugs": "https://github.com/dapaulid/remo.io/issues"
+        },
+        "license": "MIT",
+        "dependencies": {
+          "socket.io": "^2.2.0"
+        },
+        "devDependencies": {
+          "@types/socket.io": "^2.1.2",
+          "@types/socket.io-client": "^1.4.32",
+          "@types/ws": "^6.0.1",
+          "browserify": "^16.3.0",
+          "express": "^4.17.1",
+          "gulp": "^4.0.2",
+          "gulp-sourcemaps": "^2.6.5",
+          "gulp-tslint": "^8.1.4",
+          "gulp-typescript": "^5.0.1",
+          "tslint": "^5.18.0",
+          "typescript": "^3.5.3",
+          "vinyl-buffer": "^1.0.1",
+          "vinyl-source-stream": "^2.0.0"
+        },
+        "releases": [
+          {
+            "from": "2019-07-09T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2019-05-10T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2019-02-09T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2018-08-08T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2017-08-08T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          }
+        ],
+        "hasTestScript": true,
+        "readme": "[![NPM version](https://badge.fury.io/js/remo.io.svg)](https://www.npmjs.com/package/remo.io)\n\n# Remo.IO\nAn intuitive, robust and efficient RPC library for Node.js and the browser.\n\n## Purpose\n\nThis library allows to expose any functions on your Node.js server so that they can be called from the browser just as if they were normal, local JavaScript functions. Callback functions will be passed as reference, allowing the server in turn to call functions directly on the client.\n\nRemo.IO aims to handle serialization of arbitrary objects (passed by value), take care of session and reconnection handling as well as properly propagate errors between server and client. It uses [Socket.IO](https://www.npmjs.com/package/socket.io) for transport.\n\n## Installation\n```\nnpm install remo.io\n```\n\n## Usage\n\n### Server\n\n```javascript\nconst remo = require('remo.io');\n\n// define functions the server should expose to the client\nconst api = {\n    hello: function (what) {\n        console.log(\"Hello \" + what + \" from client!\");\n        return \"Hello from server!\";\n    },\n    // you can also expose builtins...\n    log: console.log,\n    // ... or even all functions of a module\n    fs\n}\nconst remoServer = remo.createServer({ httpServer, api });\n```\n\n### Client\n\n```javascript\n// call a remote function on our server\nremo.getServer().then((server) =>{\n    \n    server.api.hello(\"world\").then((result) => {\n        console.log(\"Function on server completed:\", result);\n    }).catch((err) => {\n        console.error(\"Function on server failed:\", err);\n    });\n        \n})\n```\n\nFor a full example, run:\n\n```\nnpm run example\n```"
+      },
+      "npm": {
+        "downloads": [
+          {
+            "from": "2019-08-07T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2019-08-01T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2019-07-09T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2019-05-10T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2019-02-09T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          },
+          {
+            "from": "2018-08-08T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 0
+          }
+        ],
+        "dependentsCount": 0,
+        "starsCount": 0
+      },
+      "github": {
+        "starsCount": 0,
+        "forksCount": 0,
+        "subscribersCount": 1,
+        "issues": {
+          "count": 0,
+          "openCount": 0,
+          "distribution": {
+            "3600": 0,
+            "10800": 0,
+            "32400": 0,
+            "97200": 0,
+            "291600": 0,
+            "874800": 0,
+            "2624400": 0,
+            "7873200": 0,
+            "23619600": 0,
+            "70858800": 0,
+            "212576400": 0
+          },
+          "isDisabled": false
+        },
+        "contributors": [
+          {
+            "username": "dapaulid",
+            "commitsCount": 47
+          }
+        ],
+        "commits": [
+          {
+            "from": "2019-08-01T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 11
+          },
+          {
+            "from": "2019-07-09T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 47
+          },
+          {
+            "from": "2019-05-10T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 47
+          },
+          {
+            "from": "2019-02-09T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 47
+          },
+          {
+            "from": "2018-08-08T00:00:00.000Z",
+            "to": "2019-08-08T00:00:00.000Z",
+            "count": 47
+          }
+        ]
+      },
+      "source": {
+        "files": {
+          "readmeSize": 1521,
+          "testsSize": 0
+        },
+        "linters": [
+          "tslint"
+        ]
+      }
+    },
+    "evaluation": {
+      "quality": {
+        "carefulness": 0.42,
+        "tests": 0,
+        "health": 1,
+        "branding": 0
+      },
+      "popularity": {
+        "communityInterest": 2,
+        "downloadsCount": 0,
+        "downloadsAcceleration": 0,
+        "dependentsCount": 0
+      },
+      "maintenance": {
+        "releasesFrequency": 0,
+        "commitsFrequency": 1,
+        "openIssues": 0.7,
+        "issuesDistribution": 0.7
+      }
+    },
+    "score": {
+      "final": 0.36920973763560927,
+      "detail": {
+        "quality": 0.4406297994254149,
+        "popularity": 0.01416981326345929,
+        "maintenance": 0.6630324661879259
+      }
+    }
+  }
+}
