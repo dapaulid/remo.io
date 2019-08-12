@@ -20,8 +20,9 @@
     "dev": "node_modules/.bin/gulp",
     "example": "node_modules/.bin/gulp build && node example/server/app.js",
     "test": "echo \"To be done...\" && exit 0",
-    "release": "np",
-    "score": "node scripts/package-score.js"
+    "score": "node_modules/.bin/npm-score --diff reports/package-score.json",
+    "preversion": "node_modules/.bin/npm-score --save-report reports/package-score.json--commit --quiet",    
+    "release": "np"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -39,6 +40,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^5.0.1",
+    "npm-score": "^1.1.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3",
     "vinyl-buffer": "^1.0.1",
