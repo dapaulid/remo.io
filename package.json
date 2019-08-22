@@ -71,10 +71,6 @@
     "browserify": "^16.3.0",
     "chai": "^4.2.0",
     "express": "^4.17.1",
-    "gulp": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-tslint": "^8.1.4",
-    "gulp-typescript": "^5.0.1",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.1",
     "npm-score": "^1.1.0",
@@ -82,8 +78,6 @@
     "source-map-support": "^0.5.13",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.3",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "typescript": "^3.5.3"
   }
 }
