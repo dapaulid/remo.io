@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+/**
+ * @license
+ * Copyright (c) Daniel Pauli <dapaulid@gmail.com>
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+//------------------------------------------------------------------------------
+
 type SerializedValue = SerializedItem | SerializedItem[];
 type SerializedItem = Primitive | ISerializedObject;
 type Primitive = boolean | string | number | null;
@@ -133,3 +143,7 @@ export default class Serializer {
     protected valueToConst: Map<any, string>;
 
 }
+
+//------------------------------------------------------------------------------
+// end of file
+//------------------------------------------------------------------------------
