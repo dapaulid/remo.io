@@ -21,7 +21,7 @@
     "postbuild": "tslint --project tsconfig.json",
     "pretest": "npm run build",
     "test": "nyc --silent mocha",
-    "posttest": "nyc report",
+    "posttest": "nyc report --check-coverage",
     "prebundle": "npm test",
     "bundle": "browserify dist/lib/browser.js -o dist/browser/remo.js --standalone remo --exclude uws",
     "preexample": "npm run bundle",
@@ -35,20 +35,23 @@
     "diff": true,
     "reporter": "dot",
     "require": [
-      "ts-node/register",
       "source-map-support/register"
     ],
-    "spec": "test/**/*.test.ts",
+    "spec": "dist/test/**/*.test.js",
     "slow": 75,
     "timeout": 2000,
     "ui": "bdd"
   },
   "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
     "all": true,
-    "include": [
-      "lib/**/*.ts"
-    ],
+    "include": ["dist/lib"],
+    "cache": false,
+    "source-map": true,
+    "exclude-after-remap": false,
+    "statements": 0,    
+    "branches": 0,
+    "functions": 0,
+    "lines": 0,    
     "reporter": [
       "text",
       "text-summary",
