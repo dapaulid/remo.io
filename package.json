@@ -27,8 +27,8 @@
     "preexample": "npm run bundle",
     "example": "node example/server/app.js",
     "start": "nodemon --watch lib --watch test --ext ts --exec npm --silent run example",
-    "score": "node_modules/.bin/npm-score --diff reports/package-score.json",
-    "preversion": "node_modules/.bin/npm-score --save-report reports/package-score.json--commit --quiet",
+    "score": "npm-score --diff reports/package-score.json",
+    "preversion": "npm-score --save-report reports/package-score.json--commit --quiet",
     "release": "np"
   },
   "mocha": {
