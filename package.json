@@ -17,6 +17,7 @@
   },
   "main": "dist/lib/index.js",
   "scripts": {
+    "clean": "git clean -fdx dist coverage .nyc_output",
     "build": "tsc",
     "postbuild": "tslint --project tsconfig.json",
     "pretest": "npm run build",
