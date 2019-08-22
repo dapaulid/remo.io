@@ -17,30 +17,70 @@
   },
   "main": "dist/lib/index.js",
   "scripts": {
-    "dev": "node_modules/.bin/gulp",
-    "example": "node_modules/.bin/gulp build && node example/server/app.js",
-    "test": "echo \"To be done...\" && exit 0",
+    "build": "tsc",
+    "postbuild": "tslint --project tsconfig.json",
+    "pretest": "npm run build",
+    "test": "nyc --silent mocha",
+    "posttest": "nyc report",
+    "prebundle": "npm test",
+    "bundle": "browserify dist/lib/browser.js -o dist/browser/remo.js --standalone remo --exclude uws",
+    "preexample": "npm run bundle",
+    "example": "node example/server/app.js",
+    "start": "nodemon --watch lib --watch test --ext ts --exec npm --silent run example",
     "score": "node_modules/.bin/npm-score --diff reports/package-score.json",
-    "preversion": "node_modules/.bin/npm-score --save-report reports/package-score.json--commit --quiet",    
+    "preversion": "node_modules/.bin/npm-score --save-report reports/package-score.json--commit --quiet",
     "release": "np"
+  },
+  "mocha": {
+    "diff": true,
+    "reporter": "dot",
+    "require": [
+      "ts-node/register",
+      "source-map-support/register"
+    ],
+    "spec": "test/**/*.test.ts",
+    "slow": 75,
+    "timeout": 2000,
+    "ui": "bdd"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "include": [
+      "lib/**/*.ts"
+    ],
+    "reporter": [
+      "text",
+      "text-summary",
+      "lcov"
+    ]
   },
   "dependencies": {
     "debug": "^4.1.1",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
+    "@types/chai": "^4.2.0",
     "@types/debug": "^4.1.5",
+    "@types/mocha": "^5.2.7",
     "@types/socket.io": "^2.1.2",
     "@types/socket.io-client": "^1.4.32",
     "@types/ws": "^6.0.1",
     "argparse": "^1.0.10",
     "browserify": "^16.3.0",
+    "chai": "^4.2.0",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^5.0.1",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.1",
     "npm-score": "^1.1.0",
+    "nyc": "^14.1.1",
+    "source-map-support": "^0.5.13",
+    "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3",
     "vinyl-buffer": "^1.0.1",

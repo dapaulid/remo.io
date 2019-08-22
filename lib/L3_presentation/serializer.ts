@@ -102,7 +102,7 @@ export default class Serializer {
                 // handle constants (NaN, Infinity, undefined, ...)
                 if (typename === 'const' && typeof value === 'string') {
                     const constvalue = this.constToValue.get(value);
-                    if (constvalue === null) {
+                    if (!constvalue && this.valueToConst.get(constvalue) !== value) {
                         throw new RemoError(errors.DESER_UNKNOWN_CONST, { constname: value });
                     }
                     return constvalue;
@@ -117,13 +117,6 @@ export default class Serializer {
             // handle primitive
             return serialized;
         }
-    }
-
-    public test(v: any) {
-        const serialized = JSON.stringify(this.serialize(v));
-        console.log(serialized);
-        const deserialized = this.deserialize(JSON.parse(serialized));
-        return deserialized;
     }
 
     public addHandler(name: string, serializer: ISerializer) {

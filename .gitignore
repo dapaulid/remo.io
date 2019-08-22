@@ -1,8 +1,6 @@
 node_modules/
 .vscode/*
 !.vscode/tasks.json
+.nyc_output
 coverage/
-dev/
 dist/
-dts/
-worlds/
