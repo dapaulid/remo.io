@@ -28,7 +28,7 @@
     "example": "node example/server/app.js",
     "start": "nodemon --watch lib --watch test --ext ts --exec npm --silent run example",
     "score": "npm-score --diff reports/package-score.json",
-    "preversion": "npm-score --save-report reports/package-score.json--commit --quiet",
+    "preversion": "npm-score --save-report reports/package-score.json --commit --quiet",
     "release": "np"
   },
   "mocha": {
