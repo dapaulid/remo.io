@@ -5,10 +5,22 @@ import * as errors from '../../lib/errors';
 const ser = new Serializer();
 
 function testSerDeser(value: any, expected: any) {
+
+    // serialize value
     const serialized = ser.serialize(value);
+
+    // serialized value must match expected format
     assert.deepEqual(serialized, expected,
         "actual serialized value differs from expected value");
+
+    // serialized value must be formatted as JSON without loss of information
+    assert.deepEqual(serialized, JSON.parse(JSON.stringify(serialized)),
+        "loss of information when converting to/from JSON");
+
+    // deserialize value
     const deserialized = ser.deserialize(serialized);
+
+    // deserialized value must match original value
     assert.deepEqual(deserialized, value,
         "deserialized value differs from original value");
 }
