@@ -21,7 +21,7 @@
     "build": "tsc",
     "postbuild": "tslint --project tsconfig.json",
     "pretest": "npm run build",
-    "test": "nyc --silent mocha",
+    "test": "nyc --silent mocha $INSPECT",
     "posttest": "nyc report --check-coverage",
     "prebundle": "npm test",
     "bundle": "browserify dist/lib/browser.js -o dist/browser/remo.js --standalone remo --exclude uws",
@@ -40,7 +40,6 @@
     ],
     "spec": "dist/test/**/*.test.js",
     "slow": 75,
-    "inspect": 9229,
     "timeout": 999999999,
     "ui": "bdd"
   },
