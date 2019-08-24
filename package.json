@@ -17,7 +17,7 @@
   },
   "main": "dist/lib/index.js",
   "scripts": {
-    "clean": "git clean -fdx dist coverage .nyc_output",
+    "clean": "git clean -fdx dist .nyc_output",
     "build": "tsc",
     "postbuild": "tslint --project tsconfig.json",
     "pretest": "npm run build",
@@ -40,7 +40,7 @@
     ],
     "spec": "dist/test/**/*.test.js",
     "slow": 75,
-    "inspect-brk": 9229,
+    "inspect": 9229,
     "timeout": 999999999,
     "ui": "bdd"
   },
@@ -59,8 +59,9 @@
     "reporter": [
       "text",
       "text-summary",
-      "lcov"
-    ]
+      "lcovonly"
+    ],
+    "report-dir": "reports/coverage"
   },
   "dependencies": {
     "debug": "^4.1.1",
