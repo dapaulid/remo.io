@@ -1,6 +1,13 @@
+# dependencies
 node_modules/
+# Visual Studio Code related
+# https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
 .vscode/*
+!.vscode/settings.json
 !.vscode/tasks.json
-.nyc_output
-coverage/
+!.vscode/launch.json
+!.vscode/extensions.json
+# build artifacts
 dist/
+.nyc_output/
+coverage/

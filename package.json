@@ -40,7 +40,8 @@
     ],
     "spec": "dist/test/**/*.test.js",
     "slow": 75,
-    "timeout": 2000,
+    "inspect-brk": 9229,
+    "timeout": 999999999,
     "ui": "bdd"
   },
   "nyc": {
