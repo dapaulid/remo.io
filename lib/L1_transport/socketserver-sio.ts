@@ -34,6 +34,11 @@ export default class SocketServer_SIO extends SocketServer {
         });
     }
 
+    public shutdown() {
+        console.log("CLOSING");
+        this.ss.close();
+    }
+
     private ss: SocketIO.Server;
 }
 

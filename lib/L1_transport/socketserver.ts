@@ -23,6 +23,8 @@ export default abstract class SocketServer implements ISocketServer {
         this.ondisconnected = null;
     }
 
+    public abstract shutdown(): void;
+
     protected connected(socket: ISocket) {
         if (this.onconnected) {
             this.onconnected(socket);

@@ -80,6 +80,10 @@ export default class RemoteEndpoint extends Endpoint {
         });
     }
 
+    public shutdown() {
+        this.socket.disconnect();
+    }
+
     public callFunction(id: string, ...args: any): Promise<any> {
         logger.debug("calling function \"" + id + "\" with", args);
         const msg = { id, args };
@@ -154,6 +158,10 @@ export default class RemoteEndpoint extends Endpoint {
             default:
                 // do nothing
         }
+    }
+
+    public getApi() {
+        return this.api;
     }
 
     protected local: LocalEndpoint;

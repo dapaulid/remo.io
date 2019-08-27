@@ -31,6 +31,10 @@ export default class ServerEndpoint extends LocalEndpoint {
         }
     }
 
+    public shutdown(): void {
+        this.server.shutdown();
+    }
+
     protected connected(socket: L1.ISocket): void {
         this.createRemoteEndpoint(socket);
     }

@@ -17,6 +17,8 @@ export default interface ISocketServer {
     // callbacks
     onconnected: ((socket: ISocket) => void) | null;
     ondisconnected: ((socket: ISocket) => void) | null;
+
+    shutdown(): void;
 }
 
 //------------------------------------------------------------------------------

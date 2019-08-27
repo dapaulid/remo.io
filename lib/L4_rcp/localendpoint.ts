@@ -106,6 +106,10 @@ export default class LocalEndpoint extends Endpoint {
         });
     }
 
+    public shutdown() {
+        console.log("LocalEndpoint shutting down");
+    }
+
     protected createRemoteEndpoint(socket: L1.ISocket): Promise<RemoteEndpoint> {
         return new Promise((resolve, reject) => {
             const remote = new RemoteEndpoint(this, socket);
