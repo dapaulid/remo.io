@@ -27,7 +27,7 @@
     "bundle": "browserify dist/lib/browser.js -o dist/browser/remo.js --standalone remo --exclude uws",
     "preexample": "npm run bundle",
     "example": "node example/server/app.js",
-    "start": "nodemon --watch lib --watch test --ext ts --exec npm --silent run example",
+    "start": "nodemon --exec npm --silent run example",
     "score": "npm-score --diff reports/package-score.json",
     "preversion": "npm-score --save-report reports/package-score.json --commit --quiet",
     "release": "np"
@@ -61,6 +61,13 @@
       "lcovonly"
     ],
     "report-dir": "reports/coverage"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "lib",
+      "test"
+    ],
+    "ext": "ts"
   },
   "dependencies": {
     "debug": "^4.1.1",
