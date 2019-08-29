@@ -1,4 +1,6 @@
 [![NPM version](https://badge.fury.io/js/remo.io.svg)](https://www.npmjs.com/package/remo.io)
+[![build](https://travis-ci.org/dapaulid/remo.io.svg?branch=master)](https://travis-ci.org/dapaulid/remo.io)
+[![codecov](https://codecov.io/gh/dapaulid/remo.io/branch/master/graph/badge.svg)](https://codecov.io/gh/dapaulid/remo.io)
 
 # Remo.IO
 An intuitive, robust and efficient RPC library for Node.js and the browser.
