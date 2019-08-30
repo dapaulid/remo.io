@@ -32,7 +32,7 @@ const api = {
     // you can also expose builtins...
     log: console.log,
     // ... or even all functions of a module
-    fs
+    fs: require('fs'),
 }
 const remoServer = remo.createServer({ httpServer, api });
 ```

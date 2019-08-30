@@ -5,7 +5,6 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var fs = require('fs');
 
 const remo = require('../..');
 
@@ -46,7 +45,7 @@ const api = {
     // you can also expose builtins...
     log: console.log,
     // ... or even all functions of a module
-    fs,
+    fs: require('fs'),
 }
 const remoServer = remo.createServer({ httpServer, api });
 
